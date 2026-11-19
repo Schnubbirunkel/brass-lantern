@@ -6,5 +6,5 @@
 ## Releasing a new version (always do this for every new version)
 1. Bump `version` in `package.json`.
 2. Write release notes in `docs/releases/v<version>.md` (English, same structure as the previous file).
-3. Commit, then `git tag v<version>` and push the commit **and** the tag.
-4. The GitHub Action `.github/workflows/release.yml` builds Windows, macOS and Linux and publishes the release with all files.
+3. Commit and push to `main` (tags can't be pushed from Claude sessions – not needed).
+4. The GitHub Action `.github/workflows/release.yml` notices the new version, builds Windows, macOS and Linux, creates the tag `v<version>` and publishes the release with all files. Check the run with `gh api repos/Schnubbirunkel/brass-lantern/actions/runs`.

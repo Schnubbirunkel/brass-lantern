@@ -1,29 +1,51 @@
-# Builds Brass Lantern for all platforms and publishes a GitHub release
-# whenever a version tag (v1.2.3) is pushed. Release notes: docs/releases/<tag>.md
+# Builds Brass Lantern for all platforms and publishes a GitHub release.
+#
+# Runs on every push to main: if package.json carries a version that has no
+# release yet, it builds Windows, macOS and Linux and creates the tag v<version>
+# together with the release. Release notes come from docs/releases/v<version>.md.
+# Pushing a tag v* or starting the workflow by hand works as well.
 name: Release
 
 on:
   push:
+    branches: [main]
     tags: ['v*']
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Existing tag to (re)build, e.g. v1.2.0'
-        required: true
 
 permissions:
   contents: write
 
-env:
-  TAG: ${{ github.event.inputs.tag || github.ref_name }}
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.v.outputs.tag }}
+      build: ${{ steps.v.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="v$(node -p "require('./package.json').version")"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $TAG already exists – nothing to do."
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          fi
+
   linux-windows:
+    needs: prepare
+    if: needs.prepare.outputs.build == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ env.TAG }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -48,11 +70,11 @@ jobs:
           path: out/*
 
   mac:
+    needs: prepare
+    if: needs.prepare.outputs.build == 'true'
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ env.TAG }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -74,23 +96,25 @@ jobs:
           path: out/*
 
   release:
-    needs: [linux-windows, mac]
+    needs: [prepare, linux-windows, mac]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ env.TAG }}
       - uses: actions/download-artifact@v4
         with:
           path: files
           merge-multiple: true
       - name: Release notes
+        env:
+          TAG: ${{ needs.prepare.outputs.tag }}
         run: |
           if [ -f "docs/releases/$TAG.md" ]; then cp "docs/releases/$TAG.md" notes.md
           else echo "Brass Lantern $TAG" > notes.md; fi
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.TAG }}
-          name: Brass Lantern ${{ env.TAG }}
+          tag_name: ${{ needs.prepare.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: Brass Lantern ${{ needs.prepare.outputs.tag }}
           body_path: notes.md
+          make_latest: true
           files: files/*

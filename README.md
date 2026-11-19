@@ -46,7 +46,7 @@ npm run dist:mac     # macOS zips (on a Mac they get ad-hoc signed)
 npm run dist:win     # Windows zip + NSIS installer (works on Linux/macOS too)
 ```
 
-Releases are built by GitHub Actions: push a tag like `v1.2.0` and `.github/workflows/release.yml` builds all platforms and publishes the release (notes from `docs/releases/<tag>.md`).
+Releases are built by GitHub Actions: when a push to `main` carries a new version in `package.json` (or a tag `v*` is pushed), `.github/workflows/release.yml` builds all platforms, creates the tag and publishes the release (notes from `docs/releases/v<version>.md`).
 
 ## How it's built
 
