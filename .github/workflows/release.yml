@@ -1,0 +1,96 @@
+# Builds Brass Lantern for all platforms and publishes a GitHub release
+# whenever a version tag (v1.2.3) is pushed. Release notes: docs/releases/<tag>.md
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to (re)build, e.g. v1.2.0'
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  TAG: ${{ github.event.inputs.tag || github.ref_name }}
+
+jobs:
+  linux-windows:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: sudo apt-get update && sudo apt-get install -y nsis
+      - run: npm ci
+      - name: Build Linux and Windows
+        run: |
+          npx electron-builder --linux --win --publish never
+          sh tools/build-win-installer.sh
+      - name: Collect files
+        run: |
+          V=$(node -p "require('./package.json').version")
+          mkdir out
+          cp "dist/Brass Lantern-$V.AppImage" "out/BrassLantern-$V-linux-x64.AppImage"
+          cp "dist/brass-lantern_${V}_amd64.deb" out/
+          cp "dist/Brass Lantern-$V-win.zip" "out/BrassLantern-$V-win-x64-portable.zip"
+          cp "dist/BrassLantern-Setup-$V.exe" out/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-windows
+          path: out/*
+
+  mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Build macOS (ad-hoc signed)
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npx electron-builder --mac --publish never -c.mac.identity=-
+      - name: Collect files
+        run: |
+          V=$(node -p "require('./package.json').version")
+          mkdir out
+          cp "dist/Brass Lantern-$V-arm64-mac.zip" "out/BrassLantern-$V-mac-arm64.zip"
+          cp "dist/Brass Lantern-$V-mac.zip" "out/BrassLantern-$V-mac-intel.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac
+          path: out/*
+
+  release:
+    needs: [linux-windows, mac]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/download-artifact@v4
+        with:
+          path: files
+          merge-multiple: true
+      - name: Release notes
+        run: |
+          if [ -f "docs/releases/$TAG.md" ]; then cp "docs/releases/$TAG.md" notes.md
+          else echo "Brass Lantern $TAG" > notes.md; fi
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          name: Brass Lantern ${{ env.TAG }}
+          body_path: notes.md
+          files: files/*

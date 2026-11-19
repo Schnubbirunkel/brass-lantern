@@ -25,13 +25,12 @@ An interactive fiction interpreter for **Windows, macOS and Linux** with an **au
 
 ## Download & install
 
-Grab the files from the releases page.
+Grab the files from the [releases page](https://github.com/Schnubbirunkel/brass-lantern/releases/latest).
 
 - **Windows:** `BrassLantern-Setup-<version>.exe` (installs per user, no admin rights) or the portable `…-win.zip`. The installer isn't signed, so SmartScreen may warn you: “More info” → “Run anyway”.
-- **macOS:** `…-arm64-mac.zip` for Apple Silicon, `…-mac.zip` for Intel. The builds aren't signed; after unzipping run once:
+- **macOS:** `…-mac-arm64.zip` for Apple Silicon, `…-mac-intel.zip` for Intel. The app isn't notarised; after moving it to Applications run once:
   ```sh
   xattr -cr "/Applications/Brass Lantern.app"
-  codesign --force --deep --sign - "/Applications/Brass Lantern.app"
   ```
 - **Linux:** the `.AppImage` (`chmod +x` and run) or the `.deb` (`sudo apt install ./brass-lantern_<version>_amd64.deb`).
 
@@ -46,6 +45,8 @@ npm run dist:linux   # AppImage + .deb
 npm run dist:mac     # macOS zips (on a Mac they get ad-hoc signed)
 npm run dist:win     # Windows zip + NSIS installer (works on Linux/macOS too)
 ```
+
+Releases are built by GitHub Actions: push a tag like `v1.2.0` and `.github/workflows/release.yml` builds all platforms and publishes the release (notes from `docs/releases/<tag>.md`).
 
 ## How it's built
 

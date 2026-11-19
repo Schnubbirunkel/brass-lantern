@@ -22,6 +22,8 @@ Ein Interpreter für Interactive Fiction für Windows, macOS und Linux, mit auto
 
 ## Installation
 
+Die fertigen Programme gibt es auf der [Release-Seite](https://github.com/Schnubbirunkel/brass-lantern/releases/latest).
+
 ### Windows
 - **Installer:** `BrassLantern-Setup-1.2.0-x64.exe` (bzw. `-arm64` für Windows auf ARM). Da der Installer nicht signiert ist, zeigt Windows SmartScreen eine Warnung: „Weitere Informationen“ → „Trotzdem ausführen“.
 - **Ohne Installation:** `Brass Lantern-1.2.0-win.zip` entpacken und `Brass Lantern.exe` starten.
@@ -31,14 +33,13 @@ Ein Interpreter für Interactive Fiction für Windows, macOS und Linux, mit auto
 - **Debian/Ubuntu:** `sudo apt install ./brass-lantern_1.2.0_amd64.deb`
 
 ### macOS
-Die Mac-Builds wurden unter Linux erstellt und sind **nicht signiert**. Nach dem Entpacken einmal im Terminal ausführen:
+Die Mac-Version ist nicht notarisiert. Nach dem Verschieben in „Programme“ einmal im Terminal ausführen:
 
 ```sh
 xattr -cr "/Applications/Brass Lantern.app"
-codesign --force --deep --sign - "/Applications/Brass Lantern.app"
 ```
 
-`-arm64-mac.zip` ist für Apple Silicon (M1 und neuer), die andere Datei für Intel-Macs.
+`-mac-arm64.zip` ist für Apple Silicon (M1 und neuer), die andere Datei für Intel-Macs.
 
 Alternativ kannst du die App direkt auf dem Mac aus dem Quellcode bauen. Dann wird sie automatisch ad-hoc signiert:
 
