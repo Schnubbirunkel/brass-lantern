@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob: lantern: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self'">
+  <title>Brass Lantern</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body data-theme="lectrote">
+  <div id="app">
+    <header id="topbar">
+      <div class="brand" title="Brass Lantern"><span class="brand-icon"></span><span class="brand-name">Brass Lantern</span></div>
+      <nav class="topnav">
+        <button data-cmd="library" title="Bibliothek (Strg/⌘+L)"><u>B</u>ibliothek</button>
+        <button data-cmd="open" title="Story öffnen (Strg/⌘+O)"><u>Ö</u>ffnen</button>
+        <button data-cmd="save" class="game-only" title="Spielstand speichern (Strg/⌘+S)">S<u>p</u>eichern</button>
+        <button data-cmd="restore" class="game-only" title="Spielstand laden (Strg/⌘+R)"><u>L</u>aden</button>
+        <button data-cmd="toggle-map" class="game-only" title="Karte ein-/ausblenden (Strg/⌘+M)"><u>K</u>arte</button>
+        <button data-cmd="style" title="Stil wechseln"><u>S</u>til</button>
+        <button data-cmd="settings" title="Einstellungen (Strg/⌘+,)"><u>E</u>instellungen</button>
+        <button data-cmd="help" title="Hilfe (F1)"><u>H</u>ilfe</button>
+      </nav>
+      <div class="topbar-game" id="topbar-game"></div>
+    </header>
+
+    <main id="library" class="screen">
+      <div class="lib-toolbar">
+        <h1 class="lib-heading">Bibliothek</h1>
+        <input id="lib-search" class="lib-search no-steal" type="search" placeholder="Suchen: Titel, Autor, Genre …">
+        <select id="lib-sort" class="lib-sort no-steal" title="Sortierung">
+          <option value="title">Titel</option>
+          <option value="author">Autor</option>
+          <option value="played">Zuletzt gespielt</option>
+          <option value="rating">IFDB-Bewertung</option>
+          <option value="year">Erscheinungsjahr</option>
+          <option value="format">Format</option>
+        </select>
+        <span id="lib-status" class="lib-status"></span>
+        <button class="btn" id="lib-rescan" title="Ordner neu einlesen und IFDB-Daten aktualisieren">⟳ Aktualisieren</button>
+        <button class="btn" id="lib-folders" title="Spieleordner verwalten">Ordner …</button>
+        <button class="btn primary" data-cmd="open">Datei öffnen …</button>
+      </div>
+      <div class="lib-body">
+        <div id="lib-list" class="lib-list"></div>
+        <aside id="lib-detail" class="lib-detail"></aside>
+      </div>
+    </main>
+
+    <main id="game" class="screen hidden">
+      <section id="play">
+        <div id="play-frame">
+          <div class="frame-title"><span class="frame-close"></span><span class="frame-label" id="frame-label"></span></div>
+          <div id="gameport"></div>
+          <div id="suggest" class="no-steal"></div>
+        </div>
+        <div id="gameover" class="hidden">
+          <span>Das Spiel ist beendet.</span>
+          <button class="btn" data-cmd="restart">Neu starten</button>
+          <button class="btn" data-cmd="library">Zur Bibliothek</button>
+        </div>
+      </section>
+      <div id="splitter" title="Ziehen, um die Kartenbreite zu ändern"></div>
+      <aside id="mappanel"></aside>
+    </main>
+
+    <footer id="fkeys">
+      <span data-cmd="help"><b>F1</b> Hilfe</span>
+      <span data-cmd="toggle-map"><b>F2</b> Karte</span>
+      <span data-cmd="style"><b>F3</b> Stil</span>
+      <span data-cmd="settings"><b>F4</b> Optionen</span>
+      <span data-cmd="open"><b>F5</b> Öffnen</span>
+      <span data-cmd="save"><b>F6</b> Speichern</span>
+      <span data-cmd="restore"><b>F7</b> Laden</span>
+      <span data-cmd="library"><b>F10</b> Bibliothek</span>
+    </footer>
+  </div>
+
+  <div id="overlay" class="hidden">
+    <div id="dialog" class="no-steal"></div>
+  </div>
+  <div id="toast"></div>
+  <div id="crt"></div>
+  <div id="dropzone"><div>Story hier ablegen</div></div>
+</body>
+</html>

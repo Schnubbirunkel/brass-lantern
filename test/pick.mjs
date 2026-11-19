@@ -1,0 +1,16 @@
+export default async function ({ page, out, sleep }) {
+  await sleep(2500)
+  await page.click('.lib-row:has-text("Ditch Day Drifter")')
+  await sleep(300)
+  await page.click('.lib-link:has-text("IFDB-Eintrag")')
+  await sleep(1200)
+  console.log('overlay hidden?', await page.evaluate(() => document.getElementById('overlay').className))
+  await page.screenshot({ path: `${out}/lib-pick.png` })
+  await page.fill('.ifdb-pick .lib-search', 'zork')
+  await page.press('.ifdb-pick .lib-search', 'Enter')
+  await sleep(800)
+  await page.screenshot({ path: `${out}/lib-pick.png` })
+  await page.click('.ifdb-result >> nth=0').catch(e => console.log('no result', e.message))
+  await sleep(1500)
+  await page.screenshot({ path: `${out}/lib-picked.png` })
+}

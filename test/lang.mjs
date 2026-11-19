@@ -1,0 +1,20 @@
+export default async function ({ page, out, root, sleep }) {
+  await sleep(4000)
+  await page.screenshot({ path: `${out}/lang-en-library.png` })
+  await page.click('.lib-row:has-text("Lost Pig")')
+  await page.click('.lib-play')
+  await sleep(1800)
+  for (const c of ['n', 'e', 'w', 's']) { await page.fill('.line-input', c); await page.press('.line-input', 'Enter'); await sleep(350) }
+  await page.screenshot({ path: `${out}/lang-en-game.png` })
+  await page.evaluate(() => window.__lantern.command('settings'))
+  await sleep(400)
+  await page.screenshot({ path: `${out}/lang-en-settings.png` })
+  await page.selectOption('#dialog select >> nth=0', 'de')
+  await sleep(800)
+  await page.screenshot({ path: `${out}/lang-de-settings.png` })
+  await page.keyboard.press('Escape')
+  await sleep(300)
+  await page.screenshot({ path: `${out}/lang-de-game.png` })
+  const s = await page.evaluate(() => window.lantern.getSettings())
+  console.log('saved language:', s.uiLanguage)
+}

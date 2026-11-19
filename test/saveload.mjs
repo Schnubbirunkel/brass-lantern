@@ -1,0 +1,17 @@
+export default async function ({ page, app, out, root, sleep }) {
+  await app.evaluate(({ ipcMain }) => { ipcMain.removeHandler('game:fileref'); ipcMain.handle('game:fileref', () => '/tmp/bl-topbar.glksave') })
+  await page.evaluate((p) => window.__lantern.openStory(p), `${root}/test/stories/lostpig.z8`)
+  await sleep(1500)
+  await page.click('.topnav button[data-cmd=save]')
+  await sleep(800)
+  const fs = await import('node:fs')
+  console.log('saved', fs.existsSync('/tmp/bl-topbar.glksave'))
+  await page.fill('.line-input', 'w'); await page.press('.line-input', 'Enter'); await sleep(400)
+  await page.click('.topnav button[data-cmd=restore]')
+  await sleep(800)
+  console.log(await page.evaluate(() => window.__lantern.state.display.transcriptText().slice(-160).replace(/\n/g, ' | ')))
+  await page.screenshot({ path: `${out}/topbar-saveload.png` })
+  await page.evaluate(() => window.__lantern.command('theme', 'dos-blue'))
+  await sleep(500)
+  await page.screenshot({ path: `${out}/topbar-dos.png` })
+}

@@ -1,0 +1,45 @@
+@import url('../../../node_modules/@fontsource/lora/400.css');
+@import url('../../../node_modules/@fontsource/lora/400-italic.css');
+@import url('../../../node_modules/@fontsource/lora/700.css');
+@import url('../../../node_modules/@fontsource/lora/700-italic.css');
+@import url('../../../node_modules/@fontsource/libertinus-serif/400.css');
+@import url('../../../node_modules/@fontsource/libertinus-serif/400-italic.css');
+@import url('../../../node_modules/@fontsource/libertinus-serif/700.css');
+@import url('../../../node_modules/@fontsource/libertinus-serif/700-italic.css');
+@import url('../../../node_modules/@fontsource/roboto-mono/400.css');
+@import url('../../../node_modules/@fontsource/roboto-mono/400-italic.css');
+@import url('../../../node_modules/@fontsource/roboto-mono/700.css');
+@import url('../../../node_modules/@fontsource/ibm-plex-mono/400.css');
+@import url('../../../node_modules/@fontsource/ibm-plex-mono/400-italic.css');
+@import url('../../../node_modules/@fontsource/ibm-plex-mono/700.css');
+@import url('../../../node_modules/@fontsource/source-code-pro/400.css');
+@import url('../../../node_modules/@fontsource/source-code-pro/400-italic.css');
+@import url('../../../node_modules/@fontsource/source-code-pro/700.css');
+@import url('../../../node_modules/@fontsource/vt323/400.css');
+@import url('../../../node_modules/@fontsource/gentium-book-plus/400.css');
+@import url('../../../node_modules/@fontsource/gentium-book-plus/400-italic.css');
+@import url('../../../node_modules/@fontsource/gentium-book-plus/700.css');
+@import url('../../../node_modules/@fontsource/eb-garamond/400.css');
+@import url('../../../node_modules/@fontsource/eb-garamond/400-italic.css');
+@import url('../../../node_modules/@fontsource/eb-garamond/700.css');
+@import url('../../../node_modules/@fontsource/inconsolata/400.css');
+@import url('../../../node_modules/@fontsource/inconsolata/700.css');
+
+@font-face {
+  font-family: 'Lantern VGA';
+  src: url('../fonts/LanternVGA.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Lantern VGA';
+  src: url('../fonts/LanternVGA.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Lantern Chicago';
+  src: url('../fonts/LanternChicago.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

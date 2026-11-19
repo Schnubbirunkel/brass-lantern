@@ -1,0 +1,971 @@
+/* ===================================================================
+   Brass Lantern themes. Each theme sets variables on body[data-theme].
+   =================================================================== */
+
+body {
+  --bg: #fff;
+  --fg: #222;
+  --muted: #777;
+  --accent: #b8862b;
+  --accent-fg: #fff;
+  --accent-soft: rgba(184, 134, 43, .18);
+  --input-fg: #6b4a12;
+  --input-weight: 600;
+  --link: #2a5db0;
+  --status-bg: #eee;
+  --status-fg: #333;
+  --chrome-bg: #f6f4ef;
+  --chrome-fg: #333;
+  --chrome-border: #ddd8cc;
+  --chrome-hover: rgba(0, 0, 0, .06);
+  --desk-bg: #ebe7de;
+  --panel-bg: #faf8f3;
+  --panel-fg: #2a2a2a;
+  --map-bg: #f4f1e9;
+  --map-grid: rgba(0, 0, 0, .09);
+  --map-line: #8c7b5c;
+  --map-muted: #8a8172;
+  --room-bg: #fffdf8;
+  --room-fg: #2d2a24;
+  --room-border: #8c7b5c;
+  --room-shadow: rgba(0, 0, 0, .08);
+  --room-here-bg: #b8862b;
+  --room-here-fg: #fff;
+  --scroll-thumb: rgba(0, 0, 0, .2);
+  --font-body: 'Lora', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Menlo', monospace;
+  --font-ui: -apple-system, 'Segoe UI', 'Inter', 'Cantarell', 'Ubuntu', 'Noto Sans', sans-serif;
+  --font-size: 17px;
+  --line-height: 1.55;
+  --buf-pad-x: 28px;
+  --buf-pad-y: 18px;
+  --grid-pad-x: 28px;
+  --grid-pad-y: 4px;
+  --grid-line-height: 1.45;
+  --status-size: 14px;
+  --btn-radius: 6px;
+  --dlg-radius: 10px;
+}
+
+/* ---------- Parchmap (like the web site) ---------- */
+body[data-theme='parchmap'] {
+  --bg: #1e1e1e;
+  --fg: #d3d3d3;
+  --muted: #8a8a8a;
+  --accent: #e8e8e8;
+  --accent-fg: #1e1e1e;
+  --accent-soft: rgba(255, 255, 255, .12);
+  --input-fg: #ffffff;
+  --input-weight: 700;
+  --link: #9ccfff;
+  --status-bg: #1e1e1e;
+  --status-fg: #a9a9a9;
+  --status-border: 1px solid #333;
+  --chrome-bg: #171717;
+  --chrome-fg: #d3d3d3;
+  --chrome-border: #333;
+  --chrome-hover: rgba(255, 255, 255, .08);
+  --desk-bg: #1e1e1e;
+  --panel-bg: #252525;
+  --panel-fg: #d3d3d3;
+  --map-bg: #1e1e1e;
+  --map-grid: rgba(255, 255, 255, .06);
+  --map-line: #9a9a9a;
+  --map-muted: #7a7a7a;
+  --room-bg: #d3d3d3;
+  --room-fg: #1e1e1e;
+  --room-border: #d3d3d3;
+  --room-shadow: rgba(0, 0, 0, .5);
+  --room-here-bg: #ffffff;
+  --room-here-fg: #000;
+  --room-here-border: #ffffff;
+  --room-radius: 12px;
+  --scroll-thumb: rgba(255, 255, 255, .18);
+  --font-body: 'Roboto Mono', monospace;
+  --font-mono: 'Roboto Mono', monospace;
+  --font-ui: 'Roboto Mono', monospace;
+  --font-size: 15px;
+  --line-height: 1.6;
+  --ui-size: 12px;
+  --btn-radius: 20px;
+  --input-bg: #1e1e1e;
+  --selection: rgba(255, 255, 255, .2);
+}
+body[data-theme='parchmap'] .map-room.here .room-box { stroke-width: 3; }
+body[data-theme='parchmap'] .topnav button { text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
+
+body[data-theme='parchmap-light'] {
+  --bg: #d3d3d3;
+  --fg: #1e1e1e;
+  --muted: #555;
+  --accent: #1e1e1e;
+  --accent-fg: #d3d3d3;
+  --accent-soft: rgba(0, 0, 0, .1);
+  --input-fg: #000;
+  --input-weight: 700;
+  --status-bg: #d3d3d3;
+  --status-fg: #444;
+  --status-border: 1px solid #b5b5b5;
+  --chrome-bg: #c8c8c8;
+  --chrome-fg: #1e1e1e;
+  --chrome-border: #aaa;
+  --desk-bg: #d3d3d3;
+  --panel-bg: #cbcbcb;
+  --panel-fg: #1e1e1e;
+  --map-bg: #d3d3d3;
+  --map-grid: rgba(0, 0, 0, .08);
+  --map-line: #3a3a3a;
+  --map-muted: #555;
+  --room-bg: #1e1e1e;
+  --room-fg: #d3d3d3;
+  --room-border: #1e1e1e;
+  --room-shadow: rgba(0, 0, 0, .15);
+  --room-here-bg: #000;
+  --room-here-fg: #fff;
+  --room-here-border: #000;
+  --room-radius: 12px;
+  --font-body: 'Roboto Mono', monospace;
+  --font-mono: 'Roboto Mono', monospace;
+  --font-ui: 'Roboto Mono', monospace;
+  --font-size: 15px;
+  --line-height: 1.6;
+  --ui-size: 12px;
+  --btn-radius: 20px;
+}
+body[data-theme='parchmap-light'] .topnav button { text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
+
+/* ---------- Lectrote ---------- */
+body[data-theme='lectrote'] {
+  --bg: #fefefe;
+  --fg: #1c1c1c;
+  --accent: #2f6db5;
+  --accent-soft: rgba(47, 109, 181, .14);
+  --input-fg: #1d4f8b;
+  --input-weight: 600;
+  --link: #2f6db5;
+  --status-bg: #e9e9e9;
+  --status-fg: #2a2a2a;
+  --status-border: 1px solid #d6d6d6;
+  --chrome-bg: #f3f3f3;
+  --chrome-border: #dcdcdc;
+  --desk-bg: #f3f3f3;
+  --panel-bg: #fafafa;
+  --map-bg: #f6f7f9;
+  --map-line: #7d8ca3;
+  --map-muted: #7f8794;
+  --room-bg: #fff;
+  --room-fg: #1f2933;
+  --room-border: #a7b4c6;
+  --room-here-bg: #2f6db5;
+  --room-shadow: rgba(30, 50, 80, .08);
+  --font-body: 'Lora', Georgia, serif;
+  --font-mono: 'Source Code Pro', monospace;
+  --font-status: 'Lora', Georgia, serif;
+  --font-size: 17px;
+  --line-height: 1.6;
+  --buf-pad-x: 40px;
+  --buf-pad-y: 22px;
+  --grid-pad-x: 40px;
+  --frame-shadow: 0 0 0 1px #e2e2e2, 0 4px 24px rgba(0, 0, 0, .06);
+}
+body[data-theme='lectrote'] .Style_header, body[data-theme='lectrote-sepia'] .Style_header, body[data-theme='lectrote-slate'] .Style_header { font-size: 1.3em; }
+
+body[data-theme='lectrote-sepia'] {
+  --bg: #f6efe0;
+  --fg: #3b2f22;
+  --accent: #9b5a1a;
+  --accent-soft: rgba(155, 90, 26, .15);
+  --input-fg: #8a4a10;
+  --link: #8a4a10;
+  --status-bg: #e8dcc3;
+  --status-fg: #3b2f22;
+  --status-border: 1px solid #d8c9a8;
+  --chrome-bg: #ece2cd;
+  --chrome-fg: #3b2f22;
+  --chrome-border: #d6c7a6;
+  --chrome-hover: rgba(80, 50, 10, .08);
+  --desk-bg: #ece2cd;
+  --panel-bg: #f3ead7;
+  --panel-fg: #3b2f22;
+  --map-bg: #f1e7d2;
+  --map-grid: rgba(80, 50, 10, .1);
+  --map-line: #9a7b55;
+  --map-muted: #8d7556;
+  --room-bg: #fbf6ea;
+  --room-fg: #3b2f22;
+  --room-border: #a88a62;
+  --room-here-bg: #9b5a1a;
+  --font-body: 'Lora', Georgia, serif;
+  --font-mono: 'Source Code Pro', monospace;
+  --font-status: 'Lora', Georgia, serif;
+  --font-size: 17px;
+  --line-height: 1.6;
+  --buf-pad-x: 40px;
+  --buf-pad-y: 22px;
+  --grid-pad-x: 40px;
+  --frame-shadow: 0 0 0 1px #dccfb2, 0 4px 24px rgba(60, 40, 10, .08);
+  --scroll-thumb: rgba(80, 50, 10, .25);
+}
+
+body[data-theme='lectrote-slate'] {
+  --bg: #23272e;
+  --fg: #d7dae0;
+  --muted: #8b93a1;
+  --accent: #79a8e8;
+  --accent-fg: #11151b;
+  --accent-soft: rgba(121, 168, 232, .16);
+  --input-fg: #9cc3ff;
+  --link: #9cc3ff;
+  --status-bg: #2d323b;
+  --status-fg: #c8ccd4;
+  --status-border: 1px solid #3a404b;
+  --chrome-bg: #1b1e23;
+  --chrome-fg: #c8ccd4;
+  --chrome-border: #343a44;
+  --chrome-hover: rgba(255, 255, 255, .07);
+  --desk-bg: #1b1e23;
+  --panel-bg: #20242a;
+  --panel-fg: #d0d4db;
+  --map-bg: #1d2026;
+  --map-grid: rgba(255, 255, 255, .06);
+  --map-line: #6c7a90;
+  --map-muted: #7d8696;
+  --room-bg: #2c323c;
+  --room-fg: #e3e6eb;
+  --room-border: #5c6b82;
+  --room-shadow: rgba(0, 0, 0, .35);
+  --room-here-bg: #79a8e8;
+  --room-here-fg: #11151b;
+  --scroll-thumb: rgba(255, 255, 255, .15);
+  --input-bg: #1b1e23;
+  --font-body: 'Lora', Georgia, serif;
+  --font-mono: 'Source Code Pro', monospace;
+  --font-status: 'Lora', Georgia, serif;
+  --font-size: 17px;
+  --line-height: 1.6;
+  --buf-pad-x: 40px;
+  --buf-pad-y: 22px;
+  --grid-pad-x: 40px;
+  --frame-shadow: 0 0 0 1px #2e333b;
+  --selection: rgba(121, 168, 232, .3);
+}
+
+/* ---------- Gargoyle ---------- */
+body[data-theme='gargoyle'] {
+  --bg: #ffffff;
+  --fg: #000000;
+  --accent: #446b8f;
+  --accent-soft: rgba(68, 107, 143, .14);
+  --input-fg: #303080;
+  --input-weight: 700;
+  --input-style: normal;
+  --link: #303080;
+  --status-bg: #ffffff;
+  --status-fg: #000;
+  --status-border: 1px solid #888;
+  --chrome-bg: #e8e8e8;
+  --chrome-fg: #111;
+  --chrome-border: #bdbdbd;
+  --desk-bg: #ffffff;
+  --panel-bg: #f4f4f4;
+  --panel-fg: #111;
+  --map-bg: #fbfbfb;
+  --map-line: #555;
+  --map-muted: #666;
+  --room-bg: #fff;
+  --room-fg: #000;
+  --room-border: #333;
+  --room-shadow: rgba(0, 0, 0, .12);
+  --room-here-bg: #303080;
+  --room-here-fg: #fff;
+  --room-radius: 2px;
+  --font-body: 'Libertinus Serif', 'Gentium Book Plus', serif;
+  --font-mono: 'Inconsolata', 'Liberation Mono', monospace;
+  --font-status: 'Libertinus Serif', serif;
+  --font-size: 18px;
+  --line-height: 1.38;
+  --buf-pad-x: 20px;
+  --buf-pad-y: 16px;
+  --grid-pad-x: 20px;
+  --grid-pad-y: 6px;
+  --status-size: 16px;
+  --btn-radius: 3px;
+  --dlg-radius: 4px;
+}
+body[data-theme='gargoyle'] .Style_input, body[data-theme='gargoyle-night'] .Style_input { font-family: var(--font-body); }
+body[data-theme='gargoyle'] .win-buffer, body[data-theme='gargoyle-night'] .win-buffer { text-align: justify; hyphens: auto; }
+body[data-theme='gargoyle'] .Style_header, body[data-theme='gargoyle-night'] .Style_header { font-size: 1.4em; font-weight: 700; }
+
+body[data-theme='gargoyle-night'] {
+  --bg: #12161c;
+  --fg: #d9d4c7;
+  --muted: #9a9384;
+  --accent: #e0b26a;
+  --accent-fg: #12161c;
+  --accent-soft: rgba(224, 178, 106, .16);
+  --input-fg: #f2c27a;
+  --input-weight: 700;
+  --link: #f2c27a;
+  --status-bg: #12161c;
+  --status-fg: #d9d4c7;
+  --status-border: 1px solid #39404b;
+  --chrome-bg: #0d1014;
+  --chrome-fg: #cfc9ba;
+  --chrome-border: #2c323b;
+  --chrome-hover: rgba(255, 255, 255, .06);
+  --desk-bg: #12161c;
+  --panel-bg: #171b22;
+  --panel-fg: #d9d4c7;
+  --map-bg: #12161c;
+  --map-grid: rgba(255, 255, 255, .05);
+  --map-line: #7c7464;
+  --map-muted: #8a8374;
+  --room-bg: #1f252e;
+  --room-fg: #e6e0d2;
+  --room-border: #8c826e;
+  --room-shadow: rgba(0, 0, 0, .4);
+  --room-here-bg: #e0b26a;
+  --room-here-fg: #12161c;
+  --room-radius: 2px;
+  --scroll-thumb: rgba(255, 255, 255, .14);
+  --input-bg: #0d1014;
+  --font-body: 'Libertinus Serif', 'Gentium Book Plus', serif;
+  --font-mono: 'Inconsolata', monospace;
+  --font-status: 'Libertinus Serif', serif;
+  --font-size: 18px;
+  --line-height: 1.38;
+  --buf-pad-x: 20px;
+  --buf-pad-y: 16px;
+  --grid-pad-x: 20px;
+  --grid-pad-y: 6px;
+  --status-size: 16px;
+  --btn-radius: 3px;
+  --dlg-radius: 4px;
+  --selection: rgba(224, 178, 106, .3);
+}
+
+/* ---------- MS-DOS ---------- */
+body[data-theme='dos-blue'], body[data-theme='dos-black'] {
+  --font-body: 'Lantern VGA', monospace;
+  --font-mono: 'Lantern VGA', monospace;
+  --font-ui: 'Lantern VGA', monospace;
+  --font-title: 'Lantern VGA', monospace;
+  --title-weight: normal;
+  --font-size: 16px;
+  --status-size: 16px;
+  --ui-size: 16px;
+  --line-height: 1.0;
+  --grid-line-height: 1.0;
+  --buf-pad-x: 9px;
+  --buf-pad-y: 16px;
+  --grid-pad-x: 9px;
+  --grid-pad-y: 0px;
+  --btn-radius: 0;
+  --dlg-radius: 0;
+  --room-radius: 0;
+  --cover-radius: 0;
+  --topbar-h: 16px;
+  --chrome-border-w: 0;
+  --scroll-w: 16px;
+  --scroll-radius: 0;
+  --scroll-thumb-border: 0;
+  --input-weight: normal;
+  --map-line-w: 2;
+  --room-font-size: 16px;
+  --h3-transform: none;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+body[data-theme='dos-blue'] {
+  --bg: #0000aa;
+  --fg: #aaaaaa;
+  --muted: #55ffff;
+  --accent: #55ffff;
+  --accent-fg: #000;
+  --accent-soft: rgba(85, 255, 255, .15);
+  --input-fg: #ffff55;
+  --link: #55ffff;
+  --header-fg: #ffffff;
+  --subheader-fg: #ffffff;
+  --alert-fg: #ff5555;
+  --note-fg: #55ff55;
+  --status-bg: #00aaaa;
+  --status-fg: #000000;
+  --chrome-bg: #aaaaaa;
+  --chrome-fg: #000;
+  --chrome-border: #55ffff;
+  --chrome-hover: #00aa00;
+  --desk-bg: #0000aa;
+  --panel-bg: #0000aa;
+  --panel-fg: #aaaaaa;
+  --map-bg: #0000aa;
+  --map-grid: rgba(85, 255, 255, .12);
+  --map-line: #55ffff;
+  --map-muted: #55ffff;
+  --room-bg: #0000aa;
+  --room-fg: #ffffff;
+  --room-border: #ffffff;
+  --room-shadow: #000000;
+  --room-here-bg: #aa0000;
+  --room-here-fg: #ffff55;
+  --room-here-border: #ffff55;
+  --scroll-thumb: #00aaaa;
+  --scroll-track: #000080;
+  --input-bg: #000;
+  --caret: #ffff55;
+  --selection: #aaaaaa;
+  --overlay-bg: rgba(0, 0, 0, 0);
+  --dlg-bg: #aaaaaa;
+  --dlg-fg: #000;
+  --dlg-head-bg: #aaaaaa;
+  --dlg-shadow: 16px 16px 0 #000;
+  --card-bg: #0000aa;
+  --card-fg: #aaaaaa;
+  --hero-bg: #0000aa;
+  --hero-fg: #ffffff;
+  --sugg-bg: #00aaaa;
+  --sugg-fg: #000;
+  --toast-bg: #aa0000;
+  --toast-fg: #ffff55;
+  --btn-bg: #00aa00;
+  --btn-fg: #000;
+}
+body[data-theme='dos-black'] {
+  --bg: #000000;
+  --fg: #aaaaaa;
+  --muted: #555555;
+  --accent: #ffffff;
+  --accent-fg: #000;
+  --accent-soft: rgba(255, 255, 255, .12);
+  --input-fg: #ffffff;
+  --link: #55ffff;
+  --header-fg: #ffffff;
+  --subheader-fg: #ffffff;
+  --alert-fg: #ff5555;
+  --note-fg: #55ff55;
+  --status-bg: #aaaaaa;
+  --status-fg: #000000;
+  --chrome-bg: #aaaaaa;
+  --chrome-fg: #000;
+  --chrome-border: #aaaaaa;
+  --chrome-hover: #555555;
+  --desk-bg: #000000;
+  --panel-bg: #000000;
+  --panel-fg: #aaaaaa;
+  --map-bg: #000000;
+  --map-grid: rgba(170, 170, 170, .14);
+  --map-line: #aaaaaa;
+  --map-muted: #777;
+  --room-bg: #000;
+  --room-fg: #aaaaaa;
+  --room-border: #aaaaaa;
+  --room-shadow: #333;
+  --room-here-bg: #aaaaaa;
+  --room-here-fg: #000;
+  --room-here-border: #ffffff;
+  --scroll-thumb: #555;
+  --scroll-track: #111;
+  --input-bg: #000;
+  --caret: #aaaaaa;
+  --selection: #555;
+  --overlay-bg: rgba(0, 0, 0, 0);
+  --dlg-bg: #000;
+  --dlg-fg: #aaaaaa;
+  --dlg-head-bg: #aaaaaa;
+  --dlg-head-fg: #000;
+  --dlg-shadow: 16px 16px 0 #333;
+  --btn-bg: #aaaaaa;
+  --btn-fg: #000;
+  --toast-bg: #aaaaaa;
+  --toast-fg: #000;
+}
+body[data-theme^='dos-'] #topbar { padding: 0 9px; gap: 18px; }
+body[data-theme^='dos-'] .brand-icon { display: none; }
+body[data-theme^='dos-'] .brand { font-weight: normal; }
+body[data-theme^='dos-'] .brand-name::before { content: '≡ '; }
+body[data-theme^='dos-'] .topnav { gap: 18px; }
+body[data-theme^='dos-'] .topnav button { padding: 0 3px; height: 16px; line-height: 16px; }
+body[data-theme^='dos-'] .topnav button u { color: #aa0000; }
+body[data-theme^='dos-'] .topnav button:hover { background: #000; color: #aaaaaa; }
+body[data-theme^='dos-'] .topnav button:hover u { color: #ffffff; }
+body[data-theme^='dos-'] #fkeys {
+  display: flex;
+  gap: 18px;
+  height: 16px;
+  line-height: 16px;
+  padding: 0 9px;
+  background: var(--chrome-bg);
+  color: #000;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  flex: none;
+}
+body[data-theme^='dos-'] #fkeys span { cursor: pointer; }
+body[data-theme^='dos-'] #fkeys b { font-weight: normal; color: #aa0000; }
+body[data-theme^='dos-'] #fkeys span:hover { background: #000; color: #aaa; }
+body[data-theme^='dos-'] #mappanel {
+  border: 0;
+  outline: 0;
+  box-shadow: inset 0 0 0 3px var(--panel-bg), inset 0 0 0 5px var(--map-line), inset 0 0 0 7px var(--panel-bg), inset 0 0 0 9px var(--map-line);
+  padding: 12px;
+}
+body[data-theme^='dos-'] .map-toolbar { background: transparent; border-bottom: 2px solid var(--map-line); }
+body[data-theme^='dos-'] .map-title { font-weight: normal; color: #fff; }
+body[data-theme^='dos-'] .map-title::before { content: '═╡ '; color: var(--map-line); }
+body[data-theme^='dos-'] .map-title::after { content: ' ╞═'; color: var(--map-line); }
+body[data-theme^='dos-'] .map-bottom { border-top: 2px solid var(--map-line); }
+body[data-theme^='dos-'] .map-btn:hover, body[data-theme^='dos-'] .compass-grid button:hover, body[data-theme^='dos-'] .compass-extra button:hover { background: var(--chrome-hover); color: #fff; border-color: transparent; }
+body[data-theme^='dos-'] .compass-grid button.known, body[data-theme^='dos-'] .compass-extra button.known { background: var(--status-bg); color: #000; font-weight: normal; }
+body[data-theme^='dos-'] .compass-grid { grid-template-columns: repeat(3, 40px); grid-auto-rows: 18px; }
+body[data-theme^='dos-'] .compass-grid button, body[data-theme^='dos-'] .compass-extra button { height: 18px; font-size: 16px; border: 0; }
+body[data-theme^='dos-'] .room-name { font-size: 16px; }
+body[data-theme^='dos-'] .room-box { stroke-width: 2; }
+body[data-theme^='dos-'] .map-room.here .room-box { stroke-width: 3; }
+body[data-theme^='dos-'] .map-edge-label, body[data-theme^='dos-'] .map-stub-label, body[data-theme^='dos-'] .room-marks { font-size: 16px; }
+body[data-theme^='dos-'] .Style_header, body[data-theme^='dos-'] .Style_subheader, body[data-theme^='dos-'] .Style_alert { font-weight: normal; font-size: 1em; }
+body[data-theme^='dos-'] .Style_emphasized, body[data-theme^='dos-'] .Style_note { font-style: normal; color: #ffffff; }
+body[data-theme='dos-blue'] .Style_emphasized { color: #55ffff; }
+body[data-theme^='dos-'] .char-hint { height: 3px; width: 9px; vertical-align: baseline; opacity: 1; }
+body[data-theme^='dos-'] .line-input { caret-shape: underscore; }
+body[data-theme^='dos-'] #dialog, body[data-theme^='dos-'] .map-menu, body[data-theme^='dos-'] .map-list, body[data-theme^='dos-'] #gameover {
+  border: 0;
+  outline: 2px solid var(--dlg-fg);
+  outline-offset: -8px;
+  padding: 8px;
+  box-shadow: var(--dlg-shadow);
+}
+body[data-theme^='dos-'] .dlg-head { border-bottom: 0; justify-content: center; }
+body[data-theme^='dos-'] .dlg-head h2 { flex: none; font-weight: normal; padding: 0 8px; background: var(--dlg-head-bg); color: var(--dlg-head-fg, inherit); }
+body[data-theme^='dos-'] .dlg-close { position: absolute; right: 16px; }
+body[data-theme^='dos-'] .btn { border: 0; box-shadow: 9px 9px 0 #000; padding: 0 9px; height: 18px; font-size: 16px; }
+body[data-theme^='dos-'] .btn.primary { background: #00aa00; color: #000; }
+body[data-theme^='dos-'] .theme-card { border-width: 2px; border-style: double; border-color: var(--chrome-border); }
+body[data-theme^='dos-'] .lib-toolbar { background: var(--panel-bg); color: var(--fg); border-bottom: 0; box-shadow: inset 0 -2px 0 var(--map-line); padding: 8px 9px; font-size: 16px; }
+body[data-theme^='dos-'] .lib-heading { font-size: 16px; color: #fff; }
+body[data-theme^='dos-'] .lib-search, body[data-theme^='dos-'] .lib-sort { background: #000; color: #fff; border: 0; border-radius: 0; font-size: 16px; }
+body[data-theme='dos-blue'] .lib-search, body[data-theme='dos-blue'] .lib-sort { background: #000080; }
+body[data-theme^='dos-'] .lib-row, body[data-theme^='dos-'] .lib-detail, body[data-theme^='dos-'] .lib-welcome, body[data-theme^='dos-'] .lib-toolbar { font-size: 16px; }
+body[data-theme^='dos-'] .lib-row { border-radius: 0; padding: 2px 9px; }
+body[data-theme^='dos-'] .lib-row.selected, body[data-theme^='dos-'] .lib-list:focus .lib-row.selected { background: var(--status-bg); color: var(--status-fg); border-color: transparent; }
+body[data-theme^='dos-'] .lib-row-title { font-size: 16px; font-weight: normal; color: #fff; }
+body[data-theme^='dos-'] .lib-row.selected .lib-row-title { color: inherit; }
+body[data-theme^='dos-'] .lib-row-sub, body[data-theme^='dos-'] .lib-row-side, body[data-theme^='dos-'] .lib-facts, body[data-theme^='dos-'] .lib-detail-foot, body[data-theme^='dos-'] .lib-desc, body[data-theme^='dos-'] .lib-tag, body[data-theme^='dos-'] .lib-stars, body[data-theme^='dos-'] .lib-link, body[data-theme^='dos-'] .lib-path { font-size: 16px; }
+body[data-theme^='dos-'] .lib-thumb, body[data-theme^='dos-'] .lib-cover-big { border-radius: 0; box-shadow: none; image-rendering: pixelated; }
+body[data-theme^='dos-'] .lib-detail { border: 0; box-shadow: inset 0 0 0 3px var(--panel-bg), inset 0 0 0 5px var(--map-line), inset 0 0 0 7px var(--panel-bg), inset 0 0 0 9px var(--map-line); padding: 24px; width: 440px; }
+body[data-theme^='dos-'] .lib-detail-title { font-size: 16px; font-weight: normal; color: #fff; }
+body[data-theme^='dos-'] .lib-welcome { border: 0; outline: 2px solid currentColor; outline-offset: -8px; padding: 30px; border-radius: 0; }
+body[data-theme^='dos-'] .lib-badge, body[data-theme^='dos-'] .lib-tag { border-radius: 0; }
+body[data-theme^='dos-'] .form-row select, body[data-theme^='dos-'] .form-row input[type=number] { background: #0000aa; color: #fff; border: 0; border-radius: 0; font-size: 16px; }
+body[data-theme='dos-black'] .form-row select, body[data-theme='dos-black'] .form-row input[type=number] { background: #333; }
+body[data-theme^='dos-'] .dlg-body { font-size: 16px; }
+body[data-theme^='dos-'] .help-table td:first-child { font-size: 16px; }
+
+/* ---------- Classic Mac (System 7) ---------- */
+body[data-theme='mac-classic'] {
+  --bg: #ffffff;
+  --fg: #000000;
+  --muted: #555;
+  --accent: #000000;
+  --accent-fg: #ffffff;
+  --accent-soft: rgba(0, 0, 0, .08);
+  --input-fg: #000;
+  --input-weight: 700;
+  --link: #0000d4;
+  --status-bg: #ffffff;
+  --status-fg: #000;
+  --status-border: 1px solid #000;
+  --chrome-bg: #ffffff;
+  --chrome-fg: #000;
+  --chrome-border: #000;
+  --chrome-hover: #000;
+  --desk-bg: #a8a8a8;
+  --panel-bg: #ffffff;
+  --panel-fg: #000;
+  --map-bg: #ffffff;
+  --map-grid: rgba(0, 0, 0, .18);
+  --map-line: #000;
+  --map-muted: #444;
+  --room-bg: #fff;
+  --room-fg: #000;
+  --room-border: #000;
+  --room-shadow: #000;
+  --room-here-bg: #000;
+  --room-here-fg: #fff;
+  --room-here-border: #000;
+  --room-radius: 0;
+  --room-border-w: 1;
+  --map-line-w: 1;
+  --scroll-thumb: #fff;
+  --scroll-track: #ddd;
+  --scroll-radius: 0;
+  --scroll-w: 16px;
+  --scroll-thumb-border: 1px solid #000;
+  --font-body: 'Geneva', 'Lucida Grande', 'Verdana', 'DejaVu Sans', sans-serif;
+  --font-mono: 'Monaco', 'Lantern VGA', monospace;
+  --font-ui: 'Lantern Chicago', 'Chicago', monospace;
+  --font-title: 'Lantern Chicago', 'Chicago', monospace;
+  --font-status: 'Lantern Chicago', monospace;
+  --font-map: 'Geneva', 'Lucida Grande', 'Verdana', 'DejaVu Sans', sans-serif;
+  --title-weight: normal;
+  --font-size: 14px;
+  --status-size: 16px;
+  --line-height: 1.45;
+  --grid-line-height: 1.2;
+  --buf-pad-x: 14px;
+  --buf-pad-y: 10px;
+  --grid-pad-x: 14px;
+  --grid-pad-y: 3px;
+  --ui-size: 16px;
+  --topbar-h: 22px;
+  --btn-radius: 0;
+  --dlg-radius: 0;
+  --cover-radius: 0;
+  --play-pad: 18px 10px 18px 18px;
+  --frame-border: 1px solid #000;
+  --frame-shadow: 2px 2px 0 #000;
+  --overlay-bg: rgba(0, 0, 0, 0);
+  --dlg-border: 1px solid #000;
+  --dlg-shadow: 3px 3px 0 #000;
+  --card-shadow: 2px 2px 0 #000;
+  --h3-transform: none;
+  --selection: #000;
+  --input-bg: #fff;
+  --toast-bg: #fff;
+}
+body[data-theme='mac-classic'] {
+  background-color: #a8a8a8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23ffffff'/%3E%3Crect width='1' height='1' fill='%23000'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23000'/%3E%3C/svg%3E");
+  image-rendering: pixelated;
+}
+body[data-theme='mac-classic'] ::selection { color: #fff; }
+body[data-theme='mac-classic'] #library { background: transparent; }
+body[data-theme='mac-classic'] #topbar { border-bottom: 1px solid #000; padding: 0 10px; gap: 4px; }
+body[data-theme='mac-classic'] .brand-name { display: none; }
+body[data-theme='mac-classic'] .brand-icon { background: #000; width: 16px; height: 16px; margin-right: 8px; }
+body[data-theme='mac-classic'] .topnav button { padding: 1px 10px; height: 20px; }
+body[data-theme='mac-classic'] .topnav button u { text-decoration: none; }
+body[data-theme='mac-classic'] .topnav button:hover { background: #000; color: #fff; }
+body[data-theme='mac-classic'] .frame-title,
+body[data-theme='mac-classic'] .map-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  position: relative;
+  border-bottom: 1px solid #000;
+  background: #fff repeating-linear-gradient(to bottom, #fff 0 3px, #000 3px 4px) center / calc(100% - 8px) 12px no-repeat;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  flex: none;
+}
+body[data-theme='mac-classic'] .frame-label, body[data-theme='mac-classic'] .map-title { background: #fff; padding: 0 8px; z-index: 1; line-height: 18px; }
+body[data-theme='mac-classic'] .frame-close { position: absolute; left: 8px; top: 4px; width: 12px; height: 12px; border: 1px solid #000; background: #fff; box-shadow: 0 0 0 2px #fff; }
+body[data-theme='mac-classic'] .map-toolbar { justify-content: flex-start; padding: 0 4px; gap: 0; }
+body[data-theme='mac-classic'] .map-title { font-weight: normal; margin-left: 4px; }
+body[data-theme='mac-classic'] .map-btn, body[data-theme='mac-classic'] .map-level { background: #fff; z-index: 1; height: 16px; min-width: 18px; padding: 0 3px; font-family: var(--font-body); font-size: 11px; border: 1px solid #000; border-radius: 0; margin-left: 2px; }
+body[data-theme='mac-classic'] .map-level { border: 0; line-height: 16px; }
+body[data-theme='mac-classic'] .map-btn:hover { background: #000; color: #fff; }
+body[data-theme='mac-classic'] #mappanel { border: 1px solid #000; margin: 18px 18px 18px 0; box-shadow: 2px 2px 0 #000; height: auto; font-family: var(--font-body); font-size: 12px; }
+body.map-left[data-theme='mac-classic'] #mappanel { margin: 18px 0 18px 18px; border: 1px solid #000; }
+body[data-theme='mac-classic'] #splitter { background: transparent; }
+body[data-theme='mac-classic'] .room-shadow { transform: translate(-1px, -1px); }
+body[data-theme='mac-classic'] .room-name { font-size: 11px; }
+body[data-theme='mac-classic'] .compass-grid button, body[data-theme='mac-classic'] .compass-extra button { border-radius: 8px; border: 1px solid #000; color: #000; font-family: var(--font-body); }
+body[data-theme='mac-classic'] .compass-grid button.known, body[data-theme='mac-classic'] .compass-extra button.known { border-width: 2px; background: #fff; }
+body[data-theme='mac-classic'] .compass-grid button:active, body[data-theme='mac-classic'] .compass-extra button:active { background: #000; color: #fff; }
+body[data-theme='mac-classic'] .btn { border-radius: 8px; border: 1px solid #000; background: #fff; color: #000; font-family: var(--font-ui); font-size: 16px; padding: 2px 16px; }
+body[data-theme='mac-classic'] .btn.primary { box-shadow: 0 0 0 1px #fff, 0 0 0 4px #000; border-radius: 8px; margin: 4px; }
+body[data-theme='mac-classic'] .btn:active { background: #000; color: #fff; }
+body[data-theme='mac-classic'] #dialog { font-family: var(--font-body); }
+body[data-theme='mac-classic'] .dlg-head {
+  padding: 0;
+  height: 20px;
+  justify-content: center;
+  border-bottom: 1px solid #000;
+  background: #fff repeating-linear-gradient(to bottom, #fff 0 3px, #000 3px 4px) center / calc(100% - 8px) 12px no-repeat;
+  position: relative;
+}
+body[data-theme='mac-classic'] .dlg-head h2 { flex: none; background: #fff; padding: 0 8px; font-size: 16px; font-weight: normal; font-family: var(--font-ui); line-height: 18px; }
+body[data-theme='mac-classic'] .dlg-close { position: absolute; left: 8px; top: 3px; width: 13px; height: 13px; padding: 0; border: 1px solid #000; background: #fff; font-size: 0; border-radius: 0; box-shadow: 0 0 0 2px #fff; }
+body[data-theme='mac-classic'] .lib-toolbar { background: #fff; border-bottom: 1px solid #000; }
+body[data-theme='mac-classic'] .lib-heading { font-family: var(--font-ui); font-weight: normal; font-size: 16px; }
+body[data-theme='mac-classic'] .lib-search, body[data-theme='mac-classic'] .lib-sort { border: 1px solid #000; border-radius: 0; font-family: var(--font-body); }
+body[data-theme='mac-classic'] .lib-body { padding: 18px; gap: 18px; }
+body[data-theme='mac-classic'] .lib-list, body[data-theme='mac-classic'] .lib-detail { background: #fff; border: 1px solid #000; box-shadow: 2px 2px 0 #000; padding: 0; }
+body[data-theme='mac-classic'] .lib-detail { padding: 18px; }
+body[data-theme='mac-classic'] .lib-row { border-radius: 0; font-family: var(--font-body); border: 0; border-bottom: 1px solid #ccc; margin: 0 !important; }
+body[data-theme='mac-classic'] .lib-row.selected, body[data-theme='mac-classic'] .lib-list:focus .lib-row.selected { background: #000; color: #fff; }
+body[data-theme='mac-classic'] .lib-row-title, body[data-theme='mac-classic'] .lib-detail-title { font-family: var(--font-ui); font-weight: normal; font-size: 16px; }
+body[data-theme='mac-classic'] .lib-detail-title { font-size: 18px; }
+body[data-theme='mac-classic'] .lib-thumb, body[data-theme='mac-classic'] .lib-cover-big { border-radius: 0; border: 1px solid #000; box-shadow: none; background: #fff; color: #000; }
+body[data-theme='mac-classic'] .lib-cover-big img { filter: grayscale(1) contrast(1.15); }
+body[data-theme='mac-classic'] .lib-thumb img { filter: grayscale(1) contrast(1.15); }
+body[data-theme='mac-classic'] .lib-welcome { border: 1px solid #000; background: #fff; box-shadow: 2px 2px 0 #000; border-radius: 0; }
+body[data-theme='mac-classic'] .lib-lantern { background: #000; }
+body[data-theme='mac-classic'] .lib-tag, body[data-theme='mac-classic'] .lib-badge { border-radius: 0; border-color: #000; }
+body[data-theme='mac-classic'] .lib-stars { color: inherit; }
+body[data-theme='mac-classic'] .lib-detail, body[data-theme='mac-classic'] .lib-row { font-size: 12px; }
+body[data-theme='mac-classic'] .theme-card { border-width: 1px; border-color: #000; }
+body[data-theme='mac-classic'] .theme-card.active { border-width: 3px; box-shadow: none; }
+body[data-theme='mac-classic'] .menu-item:hover { background: #000; color: #fff; }
+body[data-theme='mac-classic'] .map-menu, body[data-theme='mac-classic'] .map-list { box-shadow: 2px 2px 0 #000; }
+body[data-theme='mac-classic'] .Style_header { font-family: var(--font-title); font-weight: normal; font-size: 16px; }
+body[data-theme='mac-classic'] .Style_subheader { font-weight: 700; }
+body[data-theme='mac-classic'] .win-buffer::-webkit-scrollbar { border-left: 1px solid #000; background: repeating-conic-gradient(#fff 0 25%, #bbb 0 50%) 0 0 / 2px 2px; }
+body[data-theme='mac-classic'] #gameover { border: 1px solid #000; box-shadow: 2px 2px 0 #000; border-radius: 0; }
+
+/* ---------- Mac OS 9 Platinum ---------- */
+body[data-theme='mac-platinum'] {
+  --bg: #ffffff;
+  --fg: #000000;
+  --accent: #3366cc;
+  --accent-fg: #fff;
+  --accent-soft: rgba(51, 102, 204, .16);
+  --input-fg: #000088;
+  --input-weight: 700;
+  --link: #0000cc;
+  --status-bg: #dddddd;
+  --status-fg: #000;
+  --status-border: 1px solid #888;
+  --chrome-bg: #dddddd;
+  --chrome-fg: #000;
+  --chrome-border: #888;
+  --chrome-hover: #ccccff;
+  --desk-bg: #6f7fa0;
+  --panel-bg: #e6e6e6;
+  --panel-fg: #000;
+  --map-bg: #ffffff;
+  --map-grid: rgba(0, 0, 0, .1);
+  --map-line: #333;
+  --map-muted: #555;
+  --room-bg: #eeeeee;
+  --room-fg: #000;
+  --room-border: #555;
+  --room-shadow: rgba(0, 0, 0, .25);
+  --room-here-bg: #3366cc;
+  --room-here-fg: #fff;
+  --room-radius: 3px;
+  --scroll-thumb: #b9b9ee;
+  --scroll-track: #dddddd;
+  --scroll-radius: 0;
+  --scroll-w: 15px;
+  --scroll-thumb-border: 1px solid #555;
+  --font-body: 'Geneva', 'Lucida Grande', 'Verdana', 'DejaVu Sans', sans-serif;
+  --font-mono: 'Monaco', 'Source Code Pro', monospace;
+  --font-ui: 'Lantern Chicago', 'Charcoal', monospace;
+  --font-title: 'Lantern Chicago', monospace;
+  --font-status: 'Geneva', 'Lucida Grande', 'Verdana', sans-serif;
+  --font-map: 'Geneva', 'Lucida Grande', 'Verdana', 'DejaVu Sans', sans-serif;
+  --title-weight: normal;
+  --font-size: 14px;
+  --status-size: 13px;
+  --line-height: 1.45;
+  --buf-pad-x: 16px;
+  --buf-pad-y: 12px;
+  --grid-pad-x: 16px;
+  --ui-size: 16px;
+  --topbar-h: 22px;
+  --btn-radius: 4px;
+  --dlg-radius: 0;
+  --play-pad: 16px 8px 16px 16px;
+  --frame-border: 1px solid #000;
+  --frame-shadow: 1px 1px 0 #555, 3px 3px 6px rgba(0, 0, 0, .35);
+  --dlg-border: 1px solid #000;
+  --h3-transform: none;
+}
+body[data-theme='mac-platinum'] #topbar { background: linear-gradient(#f2f2f2, #d4d4d4); border-bottom: 1px solid #555; gap: 4px; }
+body[data-theme='mac-platinum'] .brand-name { display: none; }
+body[data-theme='mac-platinum'] .topnav button:hover { background: #3333aa; color: #fff; border-radius: 0; }
+body[data-theme='mac-platinum'] .frame-title,
+body[data-theme='mac-platinum'] .map-toolbar,
+body[data-theme='mac-platinum'] .dlg-head {
+  display: flex; align-items: center; justify-content: center;
+  height: 22px; position: relative; flex: none; padding: 0 6px;
+  border-bottom: 1px solid #555;
+  background: #dddddd repeating-linear-gradient(to bottom, #f6f6f6 0 1px, #aaaaaa 1px 2px) center / calc(100% - 50px) 12px no-repeat;
+  font-family: var(--font-ui); font-size: 16px;
+}
+body[data-theme='mac-platinum'] .map-toolbar { justify-content: flex-start; background-size: 0 0; gap: 2px; }
+body[data-theme='mac-platinum'] .frame-label, body[data-theme='mac-platinum'] .dlg-head h2 { background: #dddddd; padding: 0 8px; font-weight: normal; flex: none; font-size: 16px; }
+body[data-theme='mac-platinum'] .frame-close, body[data-theme='mac-platinum'] .dlg-close {
+  position: absolute; left: 7px; top: 4px; width: 13px; height: 13px; padding: 0; font-size: 0;
+  border: 1px solid #333; border-radius: 0; background: linear-gradient(135deg, #fff, #999); box-shadow: 0 0 0 2px #ddd;
+}
+body[data-theme='mac-platinum'] #mappanel { margin: 16px 16px 16px 0; border: 1px solid #000; box-shadow: 1px 1px 0 #555, 3px 3px 6px rgba(0, 0, 0, .35); font-family: var(--font-body); font-size: 12px; }
+body.map-left[data-theme='mac-platinum'] #mappanel { margin: 16px 0 16px 16px; }
+body[data-theme='mac-platinum'] .map-btn { border: 1px solid #555; background: linear-gradient(#fff, #ccc); height: 18px; min-width: 20px; font-family: var(--font-body); font-size: 11px; border-radius: 3px; }
+body[data-theme='mac-platinum'] .btn { background: linear-gradient(#fafafa, #cfcfcf); border: 1px solid #333; border-radius: 4px; color: #000; font-family: var(--font-ui); font-size: 16px; padding: 2px 16px; }
+body[data-theme='mac-platinum'] .btn.primary { box-shadow: 0 0 0 3px #888; }
+body[data-theme='mac-platinum'] .compass-grid button, body[data-theme='mac-platinum'] .compass-extra button { background: linear-gradient(#fff, #d6d6d6); color: #444; border-color: #777; font-family: var(--font-body); }
+body[data-theme='mac-platinum'] .compass-grid button.known, body[data-theme='mac-platinum'] .compass-extra button.known { background: linear-gradient(#dfe7ff, #9fb4ee); color: #000; }
+body[data-theme='mac-platinum'] .lib-toolbar { background: linear-gradient(#f2f2f2, #d4d4d4); border-bottom: 1px solid #555; }
+body[data-theme='mac-platinum'] .lib-heading { font-family: var(--font-ui); font-weight: normal; font-size: 16px; }
+body[data-theme='mac-platinum'] .lib-body { padding: 16px; gap: 16px; }
+body[data-theme='mac-platinum'] .lib-list, body[data-theme='mac-platinum'] .lib-detail { background: #fff; border: 1px solid #000; box-shadow: 1px 1px 0 #555, 3px 3px 6px rgba(0, 0, 0, .35); }
+body[data-theme='mac-platinum'] .lib-detail { background: #eee; }
+body[data-theme='mac-platinum'] .lib-row { border-radius: 0; font-family: var(--font-body); }
+body[data-theme='mac-platinum'] .lib-row.selected, body[data-theme='mac-platinum'] .lib-list:focus .lib-row.selected { background: #3333aa; color: #fff; border-color: transparent; }
+body[data-theme='mac-platinum'] .lib-row-title, body[data-theme='mac-platinum'] .lib-detail-title { font-family: var(--font-ui); font-weight: normal; font-size: 16px; }
+body[data-theme='mac-platinum'] .lib-welcome { border: 1px solid #555; background: #eee; border-radius: 0; color: #000; }
+
+/* ---------- Phosphor CRTs ---------- */
+body[data-theme='crt-green'], body[data-theme='crt-amber'] {
+  --font-body: 'VT323', monospace;
+  --font-mono: 'VT323', monospace;
+  --font-ui: 'VT323', monospace;
+  --font-title: 'VT323', monospace;
+  --title-weight: normal;
+  --font-size: 22px;
+  --status-size: 22px;
+  --ui-size: 19px;
+  --line-height: 1.15;
+  --grid-line-height: 1.1;
+  --buf-pad-x: 26px;
+  --buf-pad-y: 18px;
+  --grid-pad-x: 26px;
+  --grid-pad-y: 4px;
+  --btn-radius: 0;
+  --dlg-radius: 0;
+  --room-radius: 0;
+  --input-weight: normal;
+  --room-font-size: 17px;
+  --h3-transform: uppercase;
+  --scroll-radius: 0;
+  --scanline: .28;
+  --vignette: .65;
+  --glow-r: 6px;
+}
+body[data-theme='crt-green'] {
+  --bg: #031a07;
+  --fg: #33ff66;
+  --muted: #1c9c3f;
+  --accent: #66ff8c;
+  --accent-fg: #031a07;
+  --accent-soft: rgba(51, 255, 102, .14);
+  --input-fg: #b4ffc8;
+  --link: #b4ffc8;
+  --status-bg: #33ff66;
+  --status-fg: #031a07;
+  --chrome-bg: #021204;
+  --chrome-fg: #33ff66;
+  --chrome-border: #1a7a35;
+  --chrome-hover: rgba(51, 255, 102, .15);
+  --desk-bg: #010a03;
+  --panel-bg: #021204;
+  --panel-fg: #33ff66;
+  --map-bg: #031a07;
+  --map-grid: rgba(51, 255, 102, .1);
+  --map-line: #22c24f;
+  --map-muted: #1c9c3f;
+  --room-bg: #031a07;
+  --room-fg: #33ff66;
+  --room-border: #33ff66;
+  --room-shadow: rgba(51, 255, 102, .15);
+  --room-here-bg: #33ff66;
+  --room-here-fg: #031a07;
+  --scroll-thumb: rgba(51, 255, 102, .35);
+  --input-bg: #010a03;
+  --glow: rgba(51, 255, 102, .55);
+  --selection: rgba(51, 255, 102, .35);
+  --caret: #33ff66;
+}
+body[data-theme='crt-amber'] {
+  --bg: #1a0f00;
+  --fg: #ffb000;
+  --muted: #b37a00;
+  --accent: #ffcc4d;
+  --accent-fg: #1a0f00;
+  --accent-soft: rgba(255, 176, 0, .14);
+  --input-fg: #ffe099;
+  --link: #ffe099;
+  --status-bg: #ffb000;
+  --status-fg: #1a0f00;
+  --chrome-bg: #120a00;
+  --chrome-fg: #ffb000;
+  --chrome-border: #7a5200;
+  --chrome-hover: rgba(255, 176, 0, .15);
+  --desk-bg: #0b0600;
+  --panel-bg: #120a00;
+  --panel-fg: #ffb000;
+  --map-bg: #1a0f00;
+  --map-grid: rgba(255, 176, 0, .1);
+  --map-line: #cc8c00;
+  --map-muted: #b37a00;
+  --room-bg: #1a0f00;
+  --room-fg: #ffb000;
+  --room-border: #ffb000;
+  --room-shadow: rgba(255, 176, 0, .15);
+  --room-here-bg: #ffb000;
+  --room-here-fg: #1a0f00;
+  --scroll-thumb: rgba(255, 176, 0, .35);
+  --input-bg: #0b0600;
+  --glow: rgba(255, 176, 0, .5);
+  --selection: rgba(255, 176, 0, .35);
+  --caret: #ffb000;
+}
+body[data-theme^='crt-'] .Style_header, body[data-theme^='crt-'] .Style_subheader { font-weight: normal; text-transform: uppercase; }
+body[data-theme^='crt-'] .Style_emphasized { font-style: normal; text-decoration: underline; }
+body[data-theme^='crt-'] .room-name { font-size: 17px; }
+body[data-theme^='crt-'] #play-frame { border-radius: 18px; box-shadow: inset 0 0 60px rgba(0, 0, 0, .7); overflow: hidden; }
+body[data-theme^='crt-'] #play { padding: 14px; }
+body[data-theme^='crt-'] .map-svg { filter: drop-shadow(0 0 3px var(--glow)); }
+
+/* ---------- Pergament ---------- */
+body[data-theme='parchment'] {
+  --bg: #f3e7c9;
+  --fg: #3a2a17;
+  --muted: #7b6446;
+  --accent: #8b2e16;
+  --accent-fg: #f8eed4;
+  --accent-soft: rgba(139, 46, 22, .13);
+  --input-fg: #7a2810;
+  --input-weight: 600;
+  --input-style: italic;
+  --link: #7a2810;
+  --status-bg: transparent;
+  --status-fg: #5b4326;
+  --status-border: 1px solid rgba(90, 60, 30, .3);
+  --chrome-bg: #e6d5ad;
+  --chrome-fg: #3a2a17;
+  --chrome-border: #c9b083;
+  --chrome-hover: rgba(90, 60, 30, .1);
+  --desk-bg: #d9c597;
+  --panel-bg: #efe1bf;
+  --panel-fg: #3a2a17;
+  --map-bg: #f1e3c1;
+  --map-grid: rgba(90, 60, 30, .12);
+  --map-line: #6b4b2a;
+  --map-muted: #7b6446;
+  --room-bg: #f8efd8;
+  --room-fg: #3a2a17;
+  --room-border: #6b4b2a;
+  --room-shadow: rgba(90, 60, 30, .15);
+  --room-here-bg: #8b2e16;
+  --room-here-fg: #f8eed4;
+  --scroll-thumb: rgba(90, 60, 30, .3);
+  --font-body: 'EB Garamond', 'Gentium Book Plus', serif;
+  --font-mono: 'Inconsolata', monospace;
+  --font-status: 'EB Garamond', serif;
+  --font-map: 'EB Garamond', serif;
+  --font-title: 'EB Garamond', serif;
+  --font-size: 20px;
+  --status-size: 17px;
+  --line-height: 1.5;
+  --buf-pad-x: 48px;
+  --buf-pad-y: 26px;
+  --grid-pad-x: 48px;
+  --grid-pad-y: 8px;
+  --room-font-size: 13px;
+  --frame-shadow: 0 0 0 1px #c9b083, 0 10px 40px rgba(60, 40, 10, .25);
+}
+body[data-theme='parchment'] #play-frame {
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(255, 250, 235, .55), rgba(0, 0, 0, 0) 70%),
+    radial-gradient(ellipse at 0 0, rgba(120, 80, 30, .18), rgba(0, 0, 0, 0) 45%),
+    radial-gradient(ellipse at 100% 100%, rgba(120, 80, 30, .2), rgba(0, 0, 0, 0) 50%),
+    #f3e7c9;
+}
+body[data-theme='parchment'] .win-grid { font-style: italic; }
+body[data-theme='parchment'] .Style_header { font-size: 1.5em; font-variant: small-caps; letter-spacing: .03em; }
+body[data-theme='parchment'] .Style_subheader { font-variant: small-caps; letter-spacing: .04em; font-size: 1.08em; }
+body[data-theme='parchment'] .room-box { rx: 3px; }

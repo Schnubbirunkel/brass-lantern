@@ -1,0 +1,141 @@
+{
+  "name": "brass-lantern",
+  "productName": "Brass Lantern",
+  "version": "1.2.0",
+  "description": "Interactive-Fiction-Interpreter mit Automapping für macOS und Linux",
+  "main": "src/main/main.js",
+  "author": {
+    "name": "Brass Lantern",
+    "email": "noreply@example.com"
+  },
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "start": "electron .",
+    "dist:linux": "electron-builder --linux",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win && sh tools/build-win-installer.sh"
+  },
+  "dependencies": {
+    "@fontsource/eb-garamond": "^5.3.0",
+    "@fontsource/gentium-book-plus": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/inconsolata": "^5.3.0",
+    "@fontsource/libertinus-serif": "^5.3.0",
+    "@fontsource/lora": "^5.3.0",
+    "@fontsource/roboto-mono": "^5.3.0",
+    "@fontsource/source-code-pro": "^5.3.1",
+    "@fontsource/vt323": "^5.3.0",
+    "emglken": "^0.7.2"
+  },
+  "devDependencies": {
+    "electron": "^45.3.4",
+    "electron-builder": "^26.18.0",
+    "playwright-core": "^1.65.1"
+  },
+  "build": {
+    "appId": "de.brasslantern.app",
+    "productName": "Brass Lantern",
+    "copyright": "Brass Lantern – GPL-3.0",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "!src/**/*.map"
+    ],
+    "asarUnpack": [
+      "node_modules/emglken/**",
+      "src/main/engine-host.mjs"
+    ],
+    "fileAssociations": [
+      {
+        "ext": [
+          "z3",
+          "z4",
+          "z5",
+          "z8",
+          "zblorb",
+          "zlb",
+          "ulx",
+          "gblorb",
+          "glb",
+          "blorb",
+          "blb",
+          "gam",
+          "t3",
+          "hex",
+          "taf"
+        ],
+        "name": "Interactive Fiction",
+        "description": "Interactive-Fiction-Story",
+        "role": "Viewer"
+      }
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "category": "public.app-category.adventure-games",
+      "icon": "build/icon.png",
+      "identity": null,
+      "darkModeSupport": true
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Game",
+      "icon": "build/icon.png",
+      "maintainer": "Brass Lantern",
+      "synopsis": "Interactive-Fiction-Interpreter mit Automapping",
+      "executableName": "brass-lantern",
+      "syncDesktopName": true
+    },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnotify4",
+        "libnss3",
+        "libxss1",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0",
+        "libuuid1",
+        "libsecret-1-0"
+      ]
+    },
+    "publish": null,
+    "win": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    }
+  },
+  "homepage": "https://ifarchive.org/",
+  "desktopName": "brass-lantern.desktop"
+}
