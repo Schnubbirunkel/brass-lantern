@@ -4,6 +4,8 @@
 - Smoke tests: `xvfb-run -a node test/run.mjs test/smoke.mjs` (story files in `test/stories/` are not committed).
 - Windows paths: the WebAssembly interpreters only understand Unix-style absolute paths. Every path handed to or received from an interpreter must go through `src/main/vmpath.mjs` (`toVm`/`fromVm`). Test Windows behaviour on Linux with `LANTERN_FAKE_WIN=/ xvfb-run -a node test/run.mjs test/winpaths.mjs` (`LANTERN_FAKE_WIN_NOFIX=1` reproduces the original bug).
 
+- Status bars (short grid windows) are laid out by parts with CSS (`layoutStatusLine` in `glkote.js`), so the displayed text has no padding spaces. Code that needs the game's status text (automap) must read `line._src`, not `textContent`. Tests: `test/statusresize.mjs`, `test/dragstatus.mjs`, `test/statusall.mjs`.
+
 ## Releasing a new version (always do this for every new version)
 1. Bump `version` in `package.json`.
 2. Write release notes in `docs/releases/v<version>.md` (English, same structure as the previous file).

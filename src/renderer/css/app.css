@@ -789,3 +789,16 @@ body.crt #gameport { text-shadow: 0 0 var(--glow-r, 5px) var(--glow, rgba(255, 2
 @keyframes flicker { 0%, 100% { opacity: 1; } 47% { opacity: .96; } 50% { opacity: .9; } 53% { opacity: .97; } }
 
 .lib-list:focus .lib-row.selected .lib-thumb.placeholder { background: rgba(255, 255, 255, .22); color: inherit; }
+
+/* Status lines laid out by parts (see layoutStatusLine in glkote.js):
+   left part left, right part right-aligned, a centred part centred – for any width and font */
+.gridline.status-line { display: flex; position: relative; align-items: baseline; }
+.gridline.status-line.has-mid { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+.status-bg { position: absolute; inset: 0; z-index: 0; }
+.status-part { position: relative; z-index: 1; white-space: pre; }
+.status-part > span { white-space: pre; }
+.status-left { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; grid-column: 1; justify-self: start; max-width: 100%; }
+.status-gap { flex: 1 1 auto; min-width: calc(2 * var(--grid-cw, 8px)); }
+.status-mid { grid-column: 2; padding: 0 calc(2 * var(--grid-cw, 8px)); }
+.status-right { flex: none; grid-column: 3; justify-self: end; }
+.has-mid .status-gap { display: none; }

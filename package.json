@@ -1,7 +1,7 @@
 {
   "name": "brass-lantern",
   "productName": "Brass Lantern",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Interactive-Fiction-Interpreter mit Automapping für macOS und Linux",
   "main": "src/main/main.js",
   "author": {

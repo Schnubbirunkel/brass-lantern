@@ -20,6 +20,33 @@ function cssValue(v) {
   return typeof v === 'number' ? String(v) : v
 }
 
+// Split a status line (array of {ch, tpl}) into a left, middle and right part.
+// Parts are separated by two or more spaces; which group a part belongs to depends on
+// where it sat in the line the game drew (left, middle or right third). A single part
+// with equal space on both sides was centred.
+export function analyzeStatus(src) {
+  const text = src.map(c => c.ch).join('')
+  const n = text.length
+  const segs = []
+  const re = /\S+(?: \S+)*/g
+  let m
+  while ((m = re.exec(text))) segs.push({ start: m.index, end: m.index + m[0].length })
+  const lead = n - text.trimStart().length
+  const trail = n - text.trimEnd().length
+  const fillTpl = (src[Math.min(lead, n - 1)] || src[0] || {}).tpl || null
+  const groups = { left: [], mid: [], right: [] }
+  for (const seg of segs) {
+    const c = (seg.start + seg.end) / 2 / n
+    if (segs.length === 1) groups[lead > 2 && Math.abs(lead - trail) <= 2 ? 'mid' : 'left'].push(seg)
+    else if (seg === segs[0] || c < 0.34) groups.left.push(seg)
+    else if (c > 0.6 || seg === segs[segs.length - 1]) groups.right.push(seg)
+    else if (Math.abs(c - 0.5) <= 0.12) groups.mid.push(seg)
+    else groups.left.push(seg) // off-centre: keeps its distance to the left part
+  }
+  const block = (g) => g.length ? { start: g[0].start, end: g[g.length - 1].end } : null
+  return { n, lead, trail, fillTpl, left: block(groups.left), mid: block(groups.mid), right: block(groups.right) }
+}
+
 export class Display {
   constructor(gameport, opts) {
     this.port = gameport
@@ -68,8 +95,13 @@ export class Display {
     this.opts.send(ev)
   }
 
+  setCharWidthVar() {
+    if (this.metrics) this.port.style.setProperty('--grid-cw', `${this.metrics.gridcharwidth}px`)
+  }
+
   start() {
     this.metrics = this.measure()
+    this.setCharWidthVar()
     this.send({ type: 'init', support: ['timer', 'graphics', 'graphicswin', 'hyperlinks'], tzoffset: -new Date().getTimezoneOffset() })
   }
 
@@ -84,6 +116,7 @@ export class Display {
     const m = this.measure()
     if (JSON.stringify(m) === JSON.stringify(this.metrics)) return
     this.metrics = m
+    this.setCharWidthVar()
     this.send({ type: 'arrange' })
   }
 
@@ -170,7 +203,7 @@ export class Display {
 
     // Status line text (first grid window, first line)
     const grids = [...this.windows.values()].filter(w => w.type === 'grid' && !w.hidden).sort((a, b) => a.top - b.top)
-    if (grids.length) turn.status = grids[0].lines.map(l => l.textContent).filter(t => t.trim())[0] || ''
+    if (grids.length) turn.status = grids[0].lines.map(l => (l._src ? l._src.map(c => c.ch).join('') : l.textContent)).filter(t => t.trim())[0] || ''
     const lineWin = [...this.inputs.entries()].find(([, inp]) => inp.type === 'line')
     turn.lineInput = !!lineWin
     turn.charInput = [...this.inputs.values()].some(i => i.type === 'char')
@@ -220,8 +253,15 @@ export class Display {
       const s = win.el.style
       s.left = `${w.left}px`
       s.top = `${w.top}px`
-      s.width = `${w.width}px`
-      s.height = `${w.height}px`
+      // Windows that reach the right/bottom edge stay attached to it, so they follow the
+      // window size immediately instead of being clipped until the game has re-arranged
+      const m = this.metrics
+      const toRight = m && Math.abs(w.left + w.width - m.width) <= 2
+      const toBottom = m && Math.abs(w.top + w.height - m.height) <= 2
+      s.width = toRight ? 'auto' : `${w.width}px`
+      s.right = toRight ? '0px' : ''
+      s.height = toBottom ? 'auto' : `${w.height}px`
+      s.bottom = toBottom ? '0px' : ''
       s.display = w.hidden ? 'none' : ''
       if (w.styles) this.applyWindowStyles(win, w.styles)
       if (w.type === 'grid') this.resizeGrid(win, w.gridwidth, w.gridheight)
@@ -505,6 +545,7 @@ export class Display {
       for (const l of win.lines) l.textContent = ' '.repeat(win.gw || 0)
       this.applyWinColors(win, c)
     }
+    if (c.clear) for (const l of win.lines) { l._src = null; l._layout = null; l.classList.remove('status-line'); l.style.paddingLeft = l.style.paddingRight = '' }
     for (const line of c.lines || []) {
       const l = win.lines[line.line]
       if (!l) continue
@@ -512,7 +553,91 @@ export class Display {
       const runs = this.normalizeContent(line.content)
       if (!runs.length) l.textContent = ' '.repeat(win.gw || 0)
       for (const r of runs) l.appendChild(this.makeRun(win, r))
+      // Remember what the game drew, so the line can be re-laid out when the window width changes
+      l._src = []
+      for (const node of l.childNodes) {
+        const tpl = node.nodeType === 1 ? node : null
+        for (const ch of node.textContent) l._src.push({ ch, tpl })
+      }
+      l._layout = null
     }
+    this.reflowGrid(win)
+  }
+
+  // ---------- status line layout ----------
+  //
+  // Games draw their status line for a fixed number of columns and align the score with
+  // spaces. That breaks as soon as the window width changes (most Z-machine games only
+  // redraw on the next turn, so the score is cut off or a gap remains) and with
+  // proportional status fonts. So short grid windows (status lines) are laid out with
+  // CSS instead: the left part stays left, the right part right-aligned and a centred
+  // part centred – for any width, live while resizing.
+
+  reflowAllGrids() {
+    for (const w of this.windows.values()) if (w.type === 'grid') this.reflowGrid(w)
+  }
+
+  reflowGrid(win) {
+    if (win.type !== 'grid' || !win.lines.length) return
+    // Status bars: short grid windows (Hugo uses 4–5 lines with only one or two filled)
+    const filled = win.lines.filter(l => l._src && l._src.some(c => c.ch !== ' ')).length
+    const status = win.lines.length <= 5 && filled <= 3
+    for (const l of win.lines) {
+      const src = l._src
+      if (!src || !src.length || l._layout === status) continue
+      l.classList.remove('has-mid')
+      if (status) this.layoutStatusLine(l, src)
+      else this.renderGridChars(l, src)
+      l._layout = status
+    }
+  }
+
+  layoutStatusLine(l, src) {
+    const a = analyzeStatus(src)
+    l.innerHTML = ''
+    l.classList.add('status-line')
+    const cw = 'var(--grid-cw)'
+    l.style.paddingLeft = `calc(${Math.min(a.lead, 3)} * ${cw})`
+    l.style.paddingRight = `calc(${Math.min(a.trail, 6)} * ${cw})`
+    if (a.fillTpl) {
+      // Background (e.g. reverse video) across the whole line
+      const bg = a.fillTpl.cloneNode(false)
+      bg.textContent = ''
+      bg.classList.add('status-bg')
+      l.appendChild(bg)
+    }
+    const part = (b, cls) => {
+      const e = document.createElement('span')
+      e.className = `status-part ${cls}`
+      this.renderGridChars(e, src.slice(b.start, b.end), true)
+      return e
+    }
+    l.classList.toggle('has-mid', !!a.mid)
+    if (a.left) l.appendChild(part(a.left, 'status-left'))
+    l.appendChild(Object.assign(document.createElement('span'), { className: 'status-gap' }))
+    if (a.mid) l.appendChild(part(a.mid, 'status-mid'))
+    if (a.right) l.appendChild(part(a.right, 'status-right'))
+  }
+
+  renderGridChars(l, chars, append = false) {
+    if (!append) {
+      l.innerHTML = ''
+      l.classList.remove('status-line')
+      l.style.paddingLeft = ''
+      l.style.paddingRight = ''
+    }
+    let cur, text = ''
+    const flush = () => {
+      if (!text) return
+      const node = cur ? cur.cloneNode(false) : document.createElement('span')
+      node.textContent = text
+      l.appendChild(node)
+    }
+    for (const c of chars) {
+      if (c.tpl !== cur) { flush(); cur = c.tpl; text = '' }
+      text += c.ch
+    }
+    flush()
   }
 
   updateGraphics(win, c) {
