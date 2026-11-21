@@ -2,6 +2,7 @@
 
 - Electron app; UI strings: German is the source language, English translations live in `src/shared/en.json`. Wrap new UI text in `T('…')` and run `python3 tools/check-i18n.py`.
 - Smoke tests: `xvfb-run -a node test/run.mjs test/smoke.mjs` (story files in `test/stories/` are not committed).
+- Windows paths: the WebAssembly interpreters only understand Unix-style absolute paths. Every path handed to or received from an interpreter must go through `src/main/vmpath.mjs` (`toVm`/`fromVm`). Test Windows behaviour on Linux with `LANTERN_FAKE_WIN=/ xvfb-run -a node test/run.mjs test/winpaths.mjs` (`LANTERN_FAKE_WIN_NOFIX=1` reproduces the original bug).
 
 ## Releasing a new version (always do this for every new version)
 1. Bump `version` in `package.json`.

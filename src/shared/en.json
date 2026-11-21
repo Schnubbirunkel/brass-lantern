@@ -329,5 +329,6 @@
  "Befehl: {cmd}": "Command: {cmd}",
  "Doppelklick: hingehen · Rechtsklick: Optionen": "Double-click: go there · Right-click: options",
  "„save“ und „restore“ öffnen einen normalen Dateidialog. Standardordner: Dokumente/Brass Lantern/Saves.": "“save” and “restore” open a normal file dialog. Default folder: Documents/Brass Lantern/Saves.",
- "Ziehen, um die Kartenbreite zu ändern": "Drag to change the map width"
+ "Ziehen, um die Kartenbreite zu ändern": "Drag to change the map width",
+ "Die Story-Datei konnte nicht gestartet werden.": "The story file could not be started."
 }

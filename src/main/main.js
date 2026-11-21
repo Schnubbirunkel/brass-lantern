@@ -176,8 +176,11 @@ function startGame(filePath) {
   proc.on('message', (msg) => {
     if (host !== proc || !win) return
     if (msg.kind === 'update') win.webContents.send('game:update', msg.data)
-    else if (msg.kind === 'exit') win.webContents.send('game:exit', { error: msg.error })
-    else if (msg.kind === 'log' && msg.error) console.error(`[${engine}]`, msg.text)
+    else if (msg.kind === 'exit') win.webContents.send('game:exit', { error: msg.error, log: msg.log })
+    else if (msg.kind === 'log') {
+      if (msg.error) console.error(`[${engine}]`, msg.text)
+      win.webContents.send('game:log', msg.text)
+    }
   })
   proc.on('exit', (code) => {
     if (host === proc && win) win.webContents.send('game:exit', { code })

@@ -6,6 +6,7 @@ import fsp from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { osPath, toVm, fromVm } from './vmpath.mjs'
 
 const [engineFile, storyPath, dataDir] = process.argv.slice(2)
 const port = process.parentPort
@@ -19,18 +20,19 @@ class HostDialog {
     this.async = true
   }
   async init() {}
+  // All paths coming from or going to the interpreter pass through toVm/fromVm (see vmpath.mjs)
   async delete(p) {
-    try { fs.unlinkSync(p) } catch {}
+    try { fs.unlinkSync(fromVm(p)) } catch {}
   }
   async exists(p) {
-    try { await fsp.access(p, fs.constants.F_OK); return true } catch { return false }
+    try { await fsp.access(fromVm(p), fs.constants.F_OK); return true } catch { return false }
   }
   get_dirs() {
     return {
-      storyfile: path.dirname(storyPath),
-      system_cwd: dataDir,
-      temp: os.tmpdir(),
-      working: dataDir,
+      storyfile: toVm(osPath(path.dirname(storyPath))),
+      system_cwd: toVm(osPath(dataDir)),
+      temp: toVm(osPath(os.tmpdir())),
+      working: toVm(osPath(dataDir)),
     }
   }
   prompt() {
@@ -38,13 +40,14 @@ class HostDialog {
     return Promise.resolve(null)
   }
   read(p) {
-    return fsp.readFile(p).catch(() => null)
+    return fsp.readFile(fromVm(p)).catch(() => null)
   }
   set_storyfile_dir(p) {
-    return { storyfile: p, working: dataDir }
+    return { storyfile: p, working: toVm(osPath(dataDir)) }
   }
   async write(files) {
-    for (const [p, data] of Object.entries(files)) {
+    for (const [vp, data] of Object.entries(files)) {
+      const p = fromVm(vp)
       fs.mkdirSync(path.dirname(p), { recursive: true })
       fs.writeFileSync(p, data, { flush: true })
     }
@@ -65,7 +68,10 @@ class HostGlkOte {
     post({ kind: 'update', data })
   }
   event(ev) {
-    if (ev.type === 'specialresponse' && typeof ev.value === 'string') ev.value = { filename: ev.value }
+    if (ev.type === 'specialresponse') {
+      if (typeof ev.value === 'string') ev.value = { filename: ev.value }
+      if (ev.value && ev.value.filename) ev.value.filename = toVm(osPath(ev.value.filename))
+    }
     if (this.accept) this.accept(ev)
     else this.pending.push(ev)
   }
@@ -79,9 +85,15 @@ port.on('message', (e) => {
   if (msg && msg.kind === 'event') GlkOte.event(msg.event)
 })
 
+// Last error lines of the interpreter, shown to the user if it stops unexpectedly
+const stderr = []
+
 function finished(err) {
-  const exitOk = err && err.name === 'ExitStatus'
-  post({ kind: 'exit', error: exitOk || !err ? null : String(err && (err.stack || err.message || err)) })
+  const exitStatus = err && err.name === 'ExitStatus'
+  let error = null
+  if (err && !exitStatus) error = String(err.stack || err.message || err)
+  else if (exitStatus && err.status !== 0) error = stderr.join('\n') || `exit code ${err.status}`
+  post({ kind: 'exit', error, log: stderr.join('\n') })
   setTimeout(() => process.exit(0), 50)
 }
 process.on('unhandledRejection', finished)
@@ -91,10 +103,18 @@ try {
   fs.mkdirSync(dataDir, { recursive: true })
   const mod = await import(pathToFileURL(engineFile).href)
   const vm = await mod.default({
-    print: (s) => post({ kind: 'log', text: String(s) }),
-    printErr: (s) => post({ kind: 'log', text: String(s), error: true }),
+    print: (s) => {
+      stderr.push(String(s))
+      if (stderr.length > 8) stderr.shift()
+      post({ kind: 'log', text: String(s) })
+    },
+    printErr: (s) => {
+      stderr.push(String(s))
+      if (stderr.length > 8) stderr.shift()
+      post({ kind: 'log', text: String(s), error: true })
+    },
   })
-  vm.start({ arguments: [storyPath], Dialog, GlkOte })
+  vm.start({ arguments: [toVm(osPath(storyPath))], Dialog, GlkOte })
   post({ kind: 'started' })
 } catch (err) {
   finished(err)

@@ -30,7 +30,7 @@ contextBridge.exposeInMainWorld('lantern', {
   platform: () => ipcRenderer.invoke('app:platform'),
   pathForFile: (file) => webUtils.getPathForFile(file),
   on: (channel, fn) => {
-    const allowed = ['game:update', 'game:exit', 'app:command', 'app:open-file', 'library:changed']
+    const allowed = ['game:update', 'game:exit', 'app:command', 'app:open-file', 'library:changed', 'game:log']
     if (!allowed.includes(channel)) return
     ipcRenderer.on(channel, (_e, payload) => fn(payload))
   },

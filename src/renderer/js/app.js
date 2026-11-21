@@ -174,6 +174,8 @@ async function openStory(path) {
 
 async function setupGame(game) {
   teardownGame()
+  engineLog.length = 0
+  state.reportedFailure = false
   state.game = game
   document.body.classList.add('in-game')
   $('#library').classList.add('hidden')
@@ -257,7 +259,22 @@ function teardownGame() {
   clearSuggest()
 }
 
+const engineLog = []
+api.on('game:log', (text) => {
+  engineLog.push(String(text))
+  if (engineLog.length > 8) engineLog.shift()
+})
+
+// A game that stops before showing any text has failed to start: say why
+function reportSilentFailure(extra) {
+  if (!state.display || state.display.transcriptText().trim() || state.reportedFailure) return
+  state.reportedFailure = true
+  const detail = extra || engineLog.filter(Boolean).slice(-3).join(' · ')
+  toast(T('Die Story-Datei konnte nicht gestartet werden.') + (detail ? ' ' + detail.slice(0, 300) : ''), 10000)
+}
+
 function gameOver() {
+  reportSilentFailure()
   $('#gameover').classList.remove('hidden')
   state.travel = null
 }
@@ -267,7 +284,8 @@ api.on('game:update', (data) => {
 })
 
 api.on('game:exit', (info) => {
-  if (info && info.error) toast(T('Der Interpreter wurde beendet: {msg}', { msg: info.error.split('\n')[0] }), 7000)
+  if (info && info.error && state.display && !state.display.transcriptText().trim()) reportSilentFailure(info.error.split('\n').filter(Boolean).slice(-3).join(' · '))
+  else if (info && info.error) toast(T('Der Interpreter wurde beendet: {msg}', { msg: info.error.split('\n').filter(Boolean).slice(-3).join(' · ').slice(0, 300) }), 9000)
   if (state.display && !state.display.disabled) {
     state.display.disabled = true
     gameOver()
