@@ -2,7 +2,7 @@
   "name": "brass-lantern",
   "productName": "Brass Lantern",
   "version": "1.2.3",
-  "description": "Interactive-Fiction-Interpreter mit Automapping für Windows, macOS und Linux",
+  "description": "Interactive-Fiction-Interpreter mit Automapping f\u00fcr Windows, macOS und Linux",
   "main": "src/main/main.js",
   "author": {
     "name": "Brass Lantern",
@@ -15,7 +15,8 @@
     "dist:mac": "node tools/sync-version.mjs && electron-builder --mac",
     "dist:win": "node tools/sync-version.mjs && electron-builder --win && sh tools/build-win-installer.sh",
     "screenshots": "node tools/sync-version.mjs && sh tools/screenshots.sh",
-    "test": "sh tools/ci-tests.sh"
+    "test": "sh tools/ci-tests.sh",
+    "postinstall": "node node_modules/electron/install.js"
   },
   "dependencies": {
     "@fontsource/eb-garamond": "^5.3.0",
@@ -37,7 +38,7 @@
   "build": {
     "appId": "de.brasslantern.app",
     "productName": "Brass Lantern",
-    "copyright": "Brass Lantern – GPL-3.0",
+    "copyright": "Brass Lantern \u2013 GPL-3.0",
     "directories": {
       "output": "dist",
       "buildResources": "build"
