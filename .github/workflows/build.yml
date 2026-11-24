@@ -1,0 +1,164 @@
+# Build, test and release – same scheme as the Android projects (Barkeep, Boardshelf):
+#
+# - Every push and pull request: tests, screenshots and builds for Windows, macOS and Linux
+#   (downloadable as workflow artifacts).
+# - Push to main: updated screenshots are committed to docs/screenshots.
+# - Push to main whose VERSION has no release yet: release v<VERSION> is published
+#   automatically with all builds and the screenshots. Notes: docs/release-notes/v<VERSION>.md
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.v.outputs.name }}
+      release: ${{ steps.v.outputs.release }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Version
+        id: v
+        run: |
+          VERSION="$(tr -d '[:space:]' < VERSION)"
+          echo "name=$VERSION" >> "$GITHUB_OUTPUT"
+          # A release is made automatically when VERSION has no release yet (pushes to main only).
+          if [[ "$GITHUB_REF" == refs/heads/main ]] && ! git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
+            echo "New version $VERSION – will be released."
+          else
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  test-screenshots:
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+      - run: sudo apt-get update && sudo apt-get install -y xvfb
+      - run: npm ci
+      - run: node tools/sync-version.mjs
+      - name: Tests
+        run: sh tools/ci-tests.sh
+      - name: Screenshots (German and English)
+        run: sh tools/screenshots.sh
+      - name: Collect
+        run: |
+          mkdir -p out
+          cd docs/screenshots && zip -q -r ../../out/screenshots.zip . && cd ../..
+      - uses: actions/upload-artifact@v5
+        with:
+          name: screenshots
+          path: |
+            out/screenshots.zip
+            docs/screenshots/*.png
+      - name: Commit screenshots
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/screenshots
+          git diff --cached --quiet && exit 0
+          git commit -m "docs: update screenshots [skip ci]"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+  linux-windows:
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+      - run: sudo apt-get update && sudo apt-get install -y nsis
+      - run: npm ci
+      - name: Build Linux and Windows
+        run: |
+          node tools/sync-version.mjs
+          npx electron-builder --linux --win --publish never
+          sh tools/build-win-installer.sh
+      - name: Collect
+        run: |
+          V="${{ needs.version.outputs.name }}"
+          mkdir out
+          cp "dist/Brass Lantern-$V.AppImage" "out/BrassLantern-$V-linux-x64.AppImage"
+          cp "dist/brass-lantern_${V}_amd64.deb" out/
+          cp "dist/Brass Lantern-$V-win.zip" "out/BrassLantern-$V-win-x64-portable.zip"
+          cp "dist/BrassLantern-Setup-$V.exe" out/
+      - uses: actions/upload-artifact@v5
+        with:
+          name: brass-lantern-${{ needs.version.outputs.name }}-linux-windows
+          path: out/*
+
+  mac:
+    needs: version
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Build macOS (ad-hoc signed)
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: |
+          node tools/sync-version.mjs
+          npx electron-builder --mac --publish never -c.mac.identity=-
+      - name: Collect
+        run: |
+          V="${{ needs.version.outputs.name }}"
+          mkdir out
+          cp "dist/Brass Lantern-$V-arm64-mac.zip" "out/BrassLantern-$V-mac-arm64.zip"
+          cp "dist/Brass Lantern-$V-mac.zip" "out/BrassLantern-$V-mac-intel.zip"
+      - uses: actions/upload-artifact@v5
+        with:
+          name: brass-lantern-${{ needs.version.outputs.name }}-mac
+          path: out/*
+
+  release:
+    needs: [version, test-screenshots, linux-windows, mac]
+    if: needs.version.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v5
+        with:
+          path: files
+          merge-multiple: true
+      - name: Release notes
+        run: |
+          V="${{ needs.version.outputs.name }}"
+          NOTES="docs/release-notes/v$V.md"
+          if [ -f "$NOTES" ]; then cp "$NOTES" notes.md; else echo "Brass Lantern $V" > notes.md; fi
+          find files -type f | sort
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.version.outputs.name }}
+          name: Brass Lantern ${{ needs.version.outputs.name }}
+          target_commitish: ${{ github.sha }}
+          body_path: notes.md
+          make_latest: true
+          files: |
+            files/**/BrassLantern-*
+            files/**/brass-lantern_*
+            files/**/screenshots.zip
+            files/**/de_*.png

@@ -4,6 +4,8 @@
 
 Ein Interpreter für Interactive Fiction für Windows, macOS und Linux, mit automatischer Karte im Stil von Parchmap und einer Spielebibliothek, die mit IFDB abgeglichen wird.
 
+![Adventure mit automatischer Karte](docs/screenshots/de_2_game.png)
+
 ## Was es kann
 
 - **Formate:** Z-Code (.z3 bis .z8, .zblorb, auch Z6 über Bocfel), Glulx (.ulx, .gblorb, wahlweise Glulxe oder Git), TADS 2 und 3 (.gam, .t3), Hugo (.hex), ADRIFT 4 (.taf). Blorb-Dateien zeigen Titelbild, Titel und Autor in der Bibliothek, und Bilder im Spiel werden dargestellt.
@@ -19,6 +21,13 @@ Ein Interpreter für Interactive Fiction für Windows, macOS und Linux, mit auto
 - **Sprache:** Englisch (Standard) oder Deutsch, umschaltbar in den Einstellungen.
 - **Komfort:** Befehlsverlauf (↑/↓), Autovervollständigung aus dem Spieltext (Tab), Befehle wie `/goto Küche` und `/note …`, Speichern und Laden mit normalem Dateidialog, Transkript-Export.
 - **14 Stile:** Lectrote (Klassisch, Sepia, Schiefer), Gargoyle (hell, Lampenlicht), Parchmap (dunkel, hell), MS-DOS (Frotz-Blau, Infocom-Schwarz, mit VGA-Pixelschrift und F-Tastenleiste), Classic Mac System 7 (Nadelstreifen, Chicago-artige Pixelschrift), Mac OS 9 Platinum, Phosphor-Grün und -Bernstein (CRT), Pergament. Dazu lassen sich Schriftart, Schriftgröße, Zeilenabstand, Textbreite und ein CRT-Effekt für jeden Stil einstellen.
+
+| | |
+|---|---|
+| ![Bibliothek](docs/screenshots/de_1_library.png) | ![MS-DOS-Stil](docs/screenshots/de_3_dos.png) |
+| ![Classic-Mac-Stil](docs/screenshots/de_4_mac.png) | ![Phosphor-Grün](docs/screenshots/de_5_crt.png) |
+| ![Gargoyle · Lampenlicht](docs/screenshots/de_6_gargoyle.png) | ![Parchmap-Stil](docs/screenshots/de_7_parchmap.png) |
+| ![Alle Stile](docs/screenshots/de_8_styles.png) | |
 
 ## Installation
 
@@ -56,6 +65,15 @@ npm start
 ```
 
 Node.js 20 oder neuer wird benötigt.
+
+## Versionen und Releases
+
+Die Versionsnummer steht in der Datei `VERSION`. GitHub Actions (`.github/workflows/build.yml`) testet und baut jeden Push für alle Plattformen und erzeugt die Screenshots in `docs/screenshots` (Deutsch und Englisch). Hat die Version in `VERSION` noch kein Release, wird `v<VERSION>` automatisch veröffentlicht – mit allen Programmdateien und Screenshots, Notizen aus `docs/release-notes/v<VERSION>.md`.
+
+```sh
+npm test             # Tests mit den Geschichten aus test/fixtures (braucht xvfb-run)
+npm run screenshots  # Screenshots neu erzeugen
+```
 
 ## Aufbau
 

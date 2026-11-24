@@ -17,7 +17,8 @@ const app = await electron.launch({
 })
 const page = await app.firstWindow()
 page.on('console', m => console.log('[console]', m.type(), m.text()))
-page.on('pageerror', e => console.log('[pageerror]', e.message))
+let failed = false
+page.on('pageerror', e => { failed = true; console.log('[pageerror]', e.message) })
 await page.setViewportSize?.({ width: 1280, height: 800 })
 await app.evaluate(({ BrowserWindow }) => { const w = BrowserWindow.getAllWindows()[0]; w.setSize(1280, 820) })
 await page.waitForTimeout(800)
@@ -26,6 +27,8 @@ const script = (await import(path.resolve(process.argv[2]))).default
 try {
   await script({ page, app, out, root, sleep: (ms) => page.waitForTimeout(ms) })
 } catch (e) {
+  failed = true
   console.error('SCRIPT ERROR', e)
 }
 await app.close()
+if (failed) process.exitCode = 1

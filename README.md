@@ -4,7 +4,7 @@
 
 An interactive fiction interpreter for **Windows, macOS and Linux** with an **automatic map** (inspired by [Parchmap](https://github.com/roylaza/parchmap)), a **game library synced with IFDB**, and a bunch of retro styles – from MS-DOS and the classic Mac to green phosphor terminals.
 
-![Playing Adventure with the automap](docs/screenshots/game-lectrote.png)
+![Playing Adventure with the automap](docs/screenshots/en_2_game.png)
 
 ## Features
 
@@ -19,9 +19,10 @@ An interactive fiction interpreter for **Windows, macOS and Linux** with an **au
 
 | | |
 |---|---|
-| ![Library](docs/screenshots/library.png) | ![MS-DOS style](docs/screenshots/theme-dos.png) |
-| ![Classic Mac style](docs/screenshots/theme-mac.png) | ![Green phosphor style](docs/screenshots/theme-crt.png) |
-| ![Gargoyle lamplight](docs/screenshots/theme-gargoyle-night.png) | ![Parchmap style](docs/screenshots/theme-parchmap.png) |
+| ![Library](docs/screenshots/en_1_library.png) | ![MS-DOS style](docs/screenshots/en_3_dos.png) |
+| ![Classic Mac style](docs/screenshots/en_4_mac.png) | ![Green phosphor style](docs/screenshots/en_5_crt.png) |
+| ![Gargoyle lamplight](docs/screenshots/en_6_gargoyle.png) | ![Parchmap style](docs/screenshots/en_7_parchmap.png) |
+| ![All styles](docs/screenshots/en_8_styles.png) | |
 
 ## Download & install
 
@@ -46,7 +47,12 @@ npm run dist:mac     # macOS zips (on a Mac they get ad-hoc signed)
 npm run dist:win     # Windows zip + NSIS installer (works on Linux/macOS too)
 ```
 
-Releases are built by GitHub Actions: when a push to `main` carries a new version in `package.json` (or a tag `v*` is pushed), `.github/workflows/release.yml` builds all platforms, creates the tag and publishes the release (notes from `docs/releases/v<version>.md`).
+GitHub Actions (`.github/workflows/build.yml`) tests and builds every push for all platforms and takes the screenshots in `docs/screenshots` (German and English). The version lives in the file `VERSION`; when a push to `main` carries a version without a release, the release `v<VERSION>` is published automatically with all builds and screenshots (notes from `docs/release-notes/v<VERSION>.md`).
+
+```sh
+npm test             # tests with the stories in test/fixtures (needs xvfb-run)
+npm run screenshots  # regenerate docs/screenshots
+```
 
 ## How it's built
 
