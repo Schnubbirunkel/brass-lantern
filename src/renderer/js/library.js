@@ -23,11 +23,17 @@ function year(item) {
   return m ? m[0] : null
 }
 
+// Star rating as an element. The half star is drawn with CSS (a filled star clipped to
+// half over an empty one), because a dedicated half-star character is missing in many fonts.
 function stars(n) {
-  if (!n) return ''
+  const e = h('span', 'lib-stars')
+  if (!n) return e
   const full = Math.floor(n)
   const half = n - full >= 0.5
-  return '★'.repeat(full) + (half ? '⯪' : '') + '☆'.repeat(5 - full - (half ? 1 : 0))
+  e.append('★'.repeat(full))
+  if (half) e.appendChild(h('span', 'star-half', '☆'))
+  e.append('☆'.repeat(5 - full - (half ? 1 : 0)))
+  return e
 }
 
 function relDate(t) {
@@ -195,7 +201,7 @@ export class LibraryView {
     r.appendChild(main)
     const side = h('div', 'lib-row-side')
     if (item.ifdb && item.ifdb.stars) {
-      const st = h('span', 'lib-stars', stars(item.ifdb.stars))
+      const st = stars(item.ifdb.stars)
       st.title = T('IFDB: {r} von 5 ({n} Bewertungen)', { r: Number(item.ifdb.rating || item.ifdb.stars).toFixed(1), n: item.ifdb.ratings || 0 })
       side.appendChild(st)
     }
@@ -255,9 +261,17 @@ export class LibraryView {
     if (item.headline && !/^Version \d/.test(item.headline)) d.appendChild(h('div', 'lib-detail-headline', item.headline))
 
     const facts = h('div', 'lib-facts')
-    const fact = (label, value) => { if (!value) return; const f = h('div', 'lib-fact'); f.append(h('span', 'lib-fact-label', label), h('span', 'lib-fact-value', value)); facts.appendChild(f) }
+    const fact = (label, value) => {
+      if (!value) return
+      const f = h('div', 'lib-fact')
+      const v = h('span', 'lib-fact-value')
+      if (Array.isArray(value)) v.append(...value)
+      else v.append(value)
+      f.append(h('span', 'lib-fact-label', label), v)
+      facts.appendChild(f)
+    }
     const ifdb = item.ifdb
-    if (ifdb && ifdb.stars) fact(T('Bewertung'), `${stars(ifdb.stars)}  ${Number(ifdb.rating || ifdb.stars).toFixed(1)} (${ifdb.ratings || 0})`)
+    if (ifdb && ifdb.stars) fact(T('Bewertung'), [stars(ifdb.stars), `  ${Number(ifdb.rating || ifdb.stars).toFixed(1)} (${ifdb.ratings || 0})`])
     fact(T('Erschienen'), ifdb && ifdb.published)
     fact('Genre', ifdb && ifdb.genre)
     fact(T('Sprache'), ifdb && ifdb.language)
@@ -341,7 +355,7 @@ export class LibraryView {
         const t = h('div', 'lib-row-main')
         t.append(h('div', 'lib-row-title', g.title), h('div', 'lib-row-sub', [g.author, g.year].filter(Boolean).join(' · ')))
         row.append(c, t)
-        if (g.rating) row.appendChild(h('span', 'lib-stars', stars(g.rating)))
+        if (g.rating) row.appendChild(stars(g.rating))
         row.addEventListener('click', async () => {
           row.disabled = true
           const res = await api.ifdbSet(item.hash, g.tuid)

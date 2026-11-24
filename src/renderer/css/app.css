@@ -802,3 +802,7 @@ body.crt #gameport { text-shadow: 0 0 var(--glow-r, 5px) var(--glow, rgba(255, 2
 .status-mid { grid-column: 2; padding: 0 calc(2 * var(--grid-cw, 8px)); }
 .status-right { flex: none; grid-column: 3; justify-self: end; }
 .has-mid .status-gap { display: none; }
+
+/* Half star: a filled star clipped to its left half over an empty one */
+.star-half { position: relative; display: inline-block; }
+.star-half::before { content: '★'; position: absolute; left: 0; top: 0; width: 50%; overflow: hidden; }

@@ -1,8 +1,8 @@
 {
   "name": "brass-lantern",
   "productName": "Brass Lantern",
-  "version": "1.2.3",
-  "description": "Interactive-Fiction-Interpreter mit Automapping f\u00fcr Windows, macOS und Linux",
+  "version": "1.2.4",
+  "description": "Interactive-Fiction-Interpreter mit Automapping für Windows, macOS und Linux",
   "main": "src/main/main.js",
   "author": {
     "name": "Brass Lantern",
@@ -38,7 +38,7 @@
   "build": {
     "appId": "de.brasslantern.app",
     "productName": "Brass Lantern",
-    "copyright": "Brass Lantern \u2013 GPL-3.0",
+    "copyright": "Brass Lantern – GPL-3.0",
     "directories": {
       "output": "dist",
       "buildResources": "build"
