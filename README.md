@@ -37,7 +37,7 @@ Grab the files from the [releases page](https://github.com/Schnubbirunkel/brass-
 
 ## Building from source
 
-Requires Node.js 20 or newer.
+Requires Node.js 22 or newer.
 
 ```sh
 npm install

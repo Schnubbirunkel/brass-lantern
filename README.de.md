@@ -64,7 +64,7 @@ npm install
 npm start
 ```
 
-Node.js 20 oder neuer wird benötigt.
+Node.js 22 oder neuer wird benötigt.
 
 ## Versionen und Releases
 
