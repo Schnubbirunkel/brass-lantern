@@ -14,7 +14,7 @@ An interactive fiction interpreter for **Windows, macOS and Linux** with an **au
 - **Library:** pick one or more game folders; Brass Lantern lists every story with cover art, author, year, format and rating, and shows description, genre, play time and tags in a side panel. Data comes from the [Interactive Fiction Database](https://ifdb.org) (matched by IFID, falling back to the title; you can choose the right entry by hand). Sync can be turned off.
 - **Local files:** open any story via dialog, drag & drop, “Open with …” or the command line.
 - **Comfort:** command history, Tab completion from the game text, `/goto room`, `/note text`, save/restore buttons in the top bar, transcripts.
-- **14 styles:** Lectrote (Classic, Sepia, Slate), Gargoyle (light, lamplight), Parchmap (dark, light), MS-DOS (Frotz blue, Infocom black – VGA font and F-key bar), Classic Mac System 7, Mac OS 9 Platinum, green and amber phosphor (CRT), parchment. Typeface, size, line spacing, text width and a CRT effect can be set for any style.
+- **15 styles:** Lectrote (Classic, Sepia, Slate), Gargoyle (light, lamplight), Parchmap (dark, light), MS-DOS (Frotz blue, Infocom black – VGA font and F-key bar), EGA role-playing (blue double frames like the Ultima games), Classic Mac System 7, Mac OS 9 Platinum, green and amber phosphor (CRT), parchment. Typeface, size, line spacing, text width and a CRT effect can be set for any style.
 - **Interface language:** English (default) or German.
 
 | | |
@@ -22,7 +22,7 @@ An interactive fiction interpreter for **Windows, macOS and Linux** with an **au
 | ![Library](docs/screenshots/en_1_library.png) | ![MS-DOS style](docs/screenshots/en_3_dos.png) |
 | ![Classic Mac style](docs/screenshots/en_4_mac.png) | ![Green phosphor style](docs/screenshots/en_5_crt.png) |
 | ![Gargoyle lamplight](docs/screenshots/en_6_gargoyle.png) | ![Parchmap style](docs/screenshots/en_7_parchmap.png) |
-| ![All styles](docs/screenshots/en_8_styles.png) | |
+| ![EGA role-playing style](docs/screenshots/en_9_ega.png) | ![All styles](docs/screenshots/en_8_styles.png) |
 
 ## Download & install
 

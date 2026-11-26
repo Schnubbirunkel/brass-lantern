@@ -20,14 +20,14 @@ Ein Interpreter für Interactive Fiction für Windows, macOS und Linux, mit auto
   - Die Karte lässt sich ausblenden (Strg/⌘+M, F2, `/map`).
 - **Sprache:** Englisch (Standard) oder Deutsch, umschaltbar in den Einstellungen.
 - **Komfort:** Befehlsverlauf (↑/↓), Autovervollständigung aus dem Spieltext (Tab), Befehle wie `/goto Küche` und `/note …`, Speichern und Laden mit normalem Dateidialog, Transkript-Export.
-- **14 Stile:** Lectrote (Klassisch, Sepia, Schiefer), Gargoyle (hell, Lampenlicht), Parchmap (dunkel, hell), MS-DOS (Frotz-Blau, Infocom-Schwarz, mit VGA-Pixelschrift und F-Tastenleiste), Classic Mac System 7 (Nadelstreifen, Chicago-artige Pixelschrift), Mac OS 9 Platinum, Phosphor-Grün und -Bernstein (CRT), Pergament. Dazu lassen sich Schriftart, Schriftgröße, Zeilenabstand, Textbreite und ein CRT-Effekt für jeden Stil einstellen.
+- **15 Stile:** Lectrote (Klassisch, Sepia, Schiefer), Gargoyle (hell, Lampenlicht), Parchmap (dunkel, hell), MS-DOS (Frotz-Blau, Infocom-Schwarz, mit VGA-Pixelschrift und F-Tastenleiste), EGA-Rollenspiel (blaue Doppelrahmen wie in den Ultima-Spielen), Classic Mac System 7 (Nadelstreifen, Chicago-artige Pixelschrift), Mac OS 9 Platinum, Phosphor-Grün und -Bernstein (CRT), Pergament. Dazu lassen sich Schriftart, Schriftgröße, Zeilenabstand, Textbreite und ein CRT-Effekt für jeden Stil einstellen.
 
 | | |
 |---|---|
 | ![Bibliothek](docs/screenshots/de_1_library.png) | ![MS-DOS-Stil](docs/screenshots/de_3_dos.png) |
 | ![Classic-Mac-Stil](docs/screenshots/de_4_mac.png) | ![Phosphor-Grün](docs/screenshots/de_5_crt.png) |
 | ![Gargoyle · Lampenlicht](docs/screenshots/de_6_gargoyle.png) | ![Parchmap-Stil](docs/screenshots/de_7_parchmap.png) |
-| ![Alle Stile](docs/screenshots/de_8_styles.png) | |
+| ![EGA-Rollenspiel-Stil](docs/screenshots/de_9_ega.png) | ![Alle Stile](docs/screenshots/de_8_styles.png) |
 
 ## Installation
 

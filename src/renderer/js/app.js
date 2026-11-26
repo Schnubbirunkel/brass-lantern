@@ -608,6 +608,7 @@ function themePreview(t) {
   st.style.color = t.p.stfg
   st.style.fontFamily = t.p.font
   if (t.p.frame) st.style.borderBottom = '1px solid #000'
+  if (t.p.ega) { prev.style.boxShadow = 'inset 0 0 0 2px #5555ff, inset 0 0 0 4px #000, inset 0 0 0 6px #5555ff'; st.style.borderBottom = '2px solid #5555ff' }
   const txt = h('div', 'tp-text')
   txt.append(T('Du stehst auf einem Feld westlich eines weißen Hauses.'), h('br'))
   const inp = h('span', 'tp-input', T('>öffne briefkasten'))

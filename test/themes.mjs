@@ -8,7 +8,7 @@ export default async function ({ page, out, root, sleep }) {
   await page.evaluate((p) => window.__lantern.openStory(p), `${root}/test/stories/zork1.z3`)
   await sleep(1500)
   for (const c of ['n', 'e', 'open window', 'w', 'w', 'u', 'd', 'e', 'e', 'open sack', 'take all']) await type(c)
-  const themes = (process.env.THEMES || 'lectrote,lectrote-sepia,lectrote-slate,gargoyle,gargoyle-night,parchmap,parchmap-light,dos-blue,dos-black,mac-classic,mac-platinum,crt-green,crt-amber,parchment').split(',')
+  const themes = (process.env.THEMES || 'lectrote,lectrote-sepia,lectrote-slate,gargoyle,gargoyle-night,parchmap,parchmap-light,dos-blue,dos-black,ega-rpg,mac-classic,mac-platinum,crt-green,crt-amber,parchment').split(',')
   for (const t of themes) {
     await page.evaluate((t) => window.__lantern.command('theme', t), t)
     await sleep(700)

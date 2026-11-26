@@ -33,8 +33,8 @@ export default async function ({ page, app, root, sleep }) {
   await sleep(300)
   await shot(2, 'game')
 
-  // 3–6 – Styles
-  const themes = [[3, 'dos', 'dos-blue'], [4, 'mac', 'mac-classic'], [5, 'crt', 'crt-green'], [6, 'gargoyle', 'gargoyle-night'], [7, 'parchmap', 'parchmap']]
+  // 3–7, 9 – Styles
+  const themes = [[3, 'dos', 'dos-blue'], [4, 'mac', 'mac-classic'], [5, 'crt', 'crt-green'], [6, 'gargoyle', 'gargoyle-night'], [7, 'parchmap', 'parchmap'], [9, 'ega', 'ega-rpg']]
   for (const [n, name, id] of themes) {
     await page.evaluate((t) => window.__lantern.command('theme', t), id)
     await sleep(900)
